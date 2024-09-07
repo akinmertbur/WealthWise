@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/api": "http://localhost:3000", // Assuming your Express server runs on port 3000
+      "/api": "http://localhost:3000",
     },
   },
 });

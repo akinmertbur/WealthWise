@@ -29,6 +29,7 @@ const LoginPage = () => {
       if (response.ok) {
         setSuccessMessage(data.message);
         // Redirect to the home page or wherever you want after successful login
+        sessionStorage.setItem("user", JSON.stringify(data.user));
         navigate("/home");
       } else {
         setErrorMessage(data.message);

@@ -98,9 +98,18 @@ const editPasswordController = async (req, res) => {
   }
 };
 
+const checkAuthController = (req, res) => {
+  if (req.isAuthenticated()) {
+    res.status(200).json({ user: req.user });
+  } else {
+    res.status(401).json({ message: "Unauthorized" });
+  }
+};
+
 export {
   registerUserController,
   loginUserController,
   logoutUserController,
   editPasswordController,
+  checkAuthController,
 };
