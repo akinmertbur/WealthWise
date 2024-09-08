@@ -30,9 +30,8 @@ const RegisterPage = () => {
 
       if (response.ok) {
         setSuccessMessage(data.message);
-        // Redirect to the home page or another page after successful register
-        sessionStorage.setItem("user", JSON.stringify(data.user));
-        navigate("/home");
+        // Redirect to the login page and pass the success message
+        navigate("/login", { state: { successMessage: data.message } });
       } else {
         setErrorMessage(data.message);
       }

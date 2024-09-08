@@ -28,11 +28,11 @@ configureMiddleware(app);
 // Configure session management
 app.use(
   session({
-    secret: "your_secret_key", // Replace with a more secure secret in production
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: false, // Set to true if you are using HTTPS (for production)
+      secure: false,
       maxAge: 24 * 60 * 60 * 1000, // 24 hours (duration user stays logged in)
     },
   })

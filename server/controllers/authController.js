@@ -41,7 +41,7 @@ const registerUserController = async (req, res) => {
   const { email, username, password } = req.body;
   try {
     await registerUser(email, username, password);
-    res.status(200).json({ message: "success" });
+    res.status(200).json({ message: "You are registered successfully" });
   } catch (err) {
     error(`Error registering user: ${err.message}`);
     res.status(500).json({ message: err.message });
@@ -64,10 +64,8 @@ const loginUserController = (req, res, next) => {
           .status(500)
           .json({ message: "An error occurred during login" });
 
-      // Send the user object as a response (for testing purposes)
       return res.status(200).json({
         message: "Welcome to WealthWise!",
-        user: user, // Add this to return the authenticated user object
       });
     });
   })(req, res, next);

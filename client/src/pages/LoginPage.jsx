@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -7,6 +7,14 @@ const LoginPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
+  const location = useLocation(); // Use useLocation to get the state passed from the register page
+
+  useEffect(() => {
+    // Check if there is a successMessage passed from the register page
+    if (location.state && location.state.successMessage) {
+      setSuccessMessage(location.state.successMessage);
+    }
+  }, [location]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -28,8 +36,7 @@ const LoginPage = () => {
 
       if (response.ok) {
         setSuccessMessage(data.message);
-        // Redirect to the home page or wherever you want after successful login
-        sessionStorage.setItem("user", JSON.stringify(data.user));
+        // Redirect to the home page
         navigate("/home");
       } else {
         setErrorMessage(data.message);
