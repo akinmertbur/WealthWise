@@ -1,3 +1,4 @@
+// server/data/repositories/authRepository.js
 import User from "../models/userModel.js";
 
 const createUser = async (userData) => {
@@ -7,6 +8,11 @@ const createUser = async (userData) => {
 // Get user by email
 const getUserByEmail = async (email) => {
   return await User.findOne({ where: { email } });
+};
+
+// Get user by username
+const getUserByUsername = async (username) => {
+  return await User.findOne({ where: { username } });
 };
 
 // Get user by ID
@@ -22,4 +28,10 @@ const updatePassword = async (userId, newPassword) => {
   );
 };
 
-export { createUser, getUserByEmail, getUserById, updatePassword };
+export {
+  createUser,
+  getUserByEmail,
+  getUserByUsername,
+  getUserById,
+  updatePassword,
+};

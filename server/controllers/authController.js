@@ -1,4 +1,4 @@
-// service/controllers/authController.js
+// server/controllers/authController.js
 import bcrypt from "bcrypt";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
@@ -9,8 +9,6 @@ import {
   updateUserPassword,
 } from "../business/services/authService.js";
 import { log, error } from "../utils/logger.js";
-
-const saltRounds = 10;
 
 passport.use(
   new LocalStrategy(async (username, password, done) => {
@@ -74,7 +72,7 @@ const loginUserController = (req, res, next) => {
 const logoutUserController = (req, res) => {
   req.logout((err) => {
     if (err) return next(err);
-    res.status(200).json({ message: "success" });
+    res.status(200).json({ message: "You are logging out" });
   });
 };
 
@@ -82,8 +80,7 @@ const editPasswordController = async (req, res) => {
   const { userId, password } = req.body;
 
   try {
-    const hash = await bcrypt.hash(password, saltRounds);
-    const result = await updateUserPassword(userId, hash);
+    const result = await updateUserPassword(userId, password);
 
     if (result[0] === 0) {
       return res.status(404).json({ message: "User not found" });
