@@ -72,7 +72,7 @@ const loginUserController = (req, res, next) => {
 const logoutUserController = (req, res) => {
   req.logout((err) => {
     if (err) return next(err);
-    res.status(200).json({ message: "You are logging out" });
+    res.status(200).json({ message: "You are logged out successfully" });
   });
 };
 

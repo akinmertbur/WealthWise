@@ -7,10 +7,10 @@ const LoginPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
-  const location = useLocation(); // Use useLocation to get the state passed from the register page
+  const location = useLocation(); // Use useLocation to get the state passed from the register/home page
 
   useEffect(() => {
-    // Check if there is a successMessage passed from the register page
+    // Check if there is a successMessage passed from the register/home page
     if (location.state && location.state.successMessage) {
       setSuccessMessage(location.state.successMessage);
     }
@@ -36,8 +36,8 @@ const LoginPage = () => {
 
       if (response.ok) {
         setSuccessMessage(data.message);
-        // Redirect to the home page
-        navigate("/home");
+        // Redirect to the Home page and pass the success message
+        navigate("/home", { state: { successMessage: data.message } });
       } else {
         setErrorMessage(data.message);
       }
