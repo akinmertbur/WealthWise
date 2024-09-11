@@ -1,3 +1,4 @@
+// server/data/models/userModel.js
 import { DataTypes } from "sequelize";
 import sequelize from "../database/dbConfig.js";
 
