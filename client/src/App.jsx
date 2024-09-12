@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import TransactionPage from "./pages/Transaction/TransactionPage";
 
 function App() {
   return (
@@ -33,6 +34,14 @@ function App() {
           element={
             <ProtectedRoute>
               <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/transaction"
+          element={
+            <ProtectedRoute>
+              <TransactionPage />
             </ProtectedRoute>
           }
         />

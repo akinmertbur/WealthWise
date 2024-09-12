@@ -5,4 +5,16 @@ const addTransaction = async (transactionData) => {
   return await Transaction.create(transactionData);
 };
 
-export { addTransaction };
+const getIncomeTransactions = async () => {
+  return await Transaction.findAll({
+    where: { transaction_type: "income" },
+  });
+};
+
+const getExpenseTransactions = async () => {
+  return await Transaction.findAll({
+    where: { transaction_type: "expense" },
+  });
+};
+
+export { addTransaction, getIncomeTransactions, getExpenseTransactions };

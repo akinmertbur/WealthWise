@@ -1,5 +1,9 @@
 // server/business/services/transactionService.js
-import { addTransaction } from "../../data/repositories/transactionRepository.js";
+import {
+  addTransaction,
+  getIncomeTransactions,
+  getExpenseTransactions,
+} from "../../data/repositories/transactionRepository.js";
 
 const insertTransaction = async (
   userId,
@@ -38,4 +42,28 @@ const insertTransaction = async (
   }
 };
 
-export { insertTransaction };
+const retrieveIncomeTransactions = async () => {
+  try {
+    return await getIncomeTransactions();
+  } catch (err) {
+    throw new Error(
+      `Failed to retrieve the income transactions: ${err.message}`
+    );
+  }
+};
+
+const retrieveExpenseTransactions = async () => {
+  try {
+    return await getExpenseTransactions();
+  } catch (err) {
+    throw new Error(
+      `Failed to retrieve the expense transactions: ${err.message}`
+    );
+  }
+};
+
+export {
+  insertTransaction,
+  retrieveIncomeTransactions,
+  retrieveExpenseTransactions,
+};

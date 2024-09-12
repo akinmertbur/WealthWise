@@ -1,6 +1,6 @@
 // server/controllers/transactionController.js
 import { insertTransaction } from "../business/services/transactionService.js";
-import { log, error } from "../../utils/logger.js";
+import { log, error } from "../utils/logger.js";
 
 const addTransaction = async (req, res) => {
   try {
