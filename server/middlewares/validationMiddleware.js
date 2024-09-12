@@ -42,3 +42,24 @@ export const validateEditPassword = [
     next();
   },
 ];
+
+export const validateAddTransaction = [
+  check("userId").notEmpty().withMessage("User Id is required!"),
+  check("categoryId").notEmpty().withMessage("Category Id is required!"),
+  check("amount").notEmpty().withMessage("Amount cannot be empty!"),
+  check("transactionType")
+    .notEmpty()
+    .withMessage("Transaction type cannot be empty!"),
+  check("description").notEmpty().withMessage("Description cannot be empty!"),
+  check("transactionDate")
+    .notEmpty()
+    .withMessage("Transaction date cannot be empty!"),
+  check("currency").notEmpty().withMessage("Currency cannot be empty!"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
