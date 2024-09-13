@@ -19,6 +19,14 @@ const deleteTransaction = async (transaction_id) => {
   }
 };
 
+const getTransactionDetail = async (transaction_id) => {
+  return await Transaction.findOne({ where: { transaction_id } });
+};
+
+const getAllTransactions = async (user_id) => {
+  return await Transaction.findAll({ where: { user_id } });
+};
+
 const getIncomeTransactions = async () => {
   return await Transaction.findAll({
     where: { transaction_type: "income" },
@@ -35,6 +43,8 @@ export {
   addTransaction,
   editTransaction,
   deleteTransaction,
+  getTransactionDetail,
+  getAllTransactions,
   getIncomeTransactions,
   getExpenseTransactions,
 };

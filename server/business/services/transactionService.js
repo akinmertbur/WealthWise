@@ -3,6 +3,8 @@ import {
   addTransaction,
   editTransaction,
   deleteTransaction,
+  getTransactionDetail,
+  getAllTransactions,
   getIncomeTransactions,
   getExpenseTransactions,
 } from "../../data/repositories/transactionRepository.js";
@@ -99,6 +101,34 @@ const removeTransaction = async (transactionId) => {
   }
 };
 
+const retrieveTransactionDetail = async (transactionId) => {
+  try {
+    // Check whether transactionId is entered
+    if (!transactionId) {
+      throw new Error(
+        "Transaction Id is required for getting transaction detail!"
+      );
+    }
+
+    return await getTransactionDetail(transactionId);
+  } catch (err) {
+    throw new Error(`Failed to retrieve transaction: ${err.message}`);
+  }
+};
+
+const retrieveAllTransactions = async (userId) => {
+  try {
+    // Check whether userId is entered
+    if (!userId) {
+      throw new Error("User Id is required for getting all transactions!");
+    }
+
+    return await getAllTransactions(userId);
+  } catch (err) {
+    throw new Error(`Failed to retrieve all transactions: ${err.message}`);
+  }
+};
+
 const retrieveIncomeTransactions = async () => {
   try {
     return await getIncomeTransactions();
@@ -123,6 +153,8 @@ export {
   insertTransaction,
   updateTransaction,
   removeTransaction,
+  retrieveTransactionDetail,
+  retrieveAllTransactions,
   retrieveIncomeTransactions,
   retrieveExpenseTransactions,
 };

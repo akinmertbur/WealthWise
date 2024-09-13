@@ -96,3 +96,25 @@ export const validateDeleteTransaction = [
     next();
   },
 ];
+
+export const validateGetTransactionDetail = [
+  check("transactionId").notEmpty().withMessage("Transaction Id is required!"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
+export const validateGetAllTransactions = [
+  check("userId").notEmpty().withMessage("User Id is required!"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];

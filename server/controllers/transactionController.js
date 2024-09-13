@@ -3,6 +3,8 @@ import {
   insertTransaction,
   updateTransaction,
   removeTransaction,
+  retrieveTransactionDetail,
+  retrieveAllTransactions,
 } from "../business/services/transactionService.js";
 import { log, error } from "../utils/logger.js";
 
@@ -82,4 +84,38 @@ const deleteTransaction = async (req, res) => {
   }
 };
 
-export { addTransaction, editTransaction, deleteTransaction };
+const getTransactionDetail = async (req, res) => {
+  try {
+    const { transactionId } = req.body;
+
+    const result = await retrieveTransactionDetail(transactionId);
+
+    log(`Transaction detail retrieved successfully!`);
+    res.status(200).json({ result });
+  } catch (err) {
+    error(`Failed to retrieve transaction detail: ${err.message}`);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const getAllTransactions = async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+    const result = await retrieveAllTransactions(userId);
+
+    log(`All transactions retrieved successfully!`);
+    res.status(200).json({ result });
+  } catch (err) {
+    error(`Failed to retrieve all transactions: ${err.message}`);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+export {
+  addTransaction,
+  editTransaction,
+  deleteTransaction,
+  getTransactionDetail,
+  getAllTransactions,
+};
