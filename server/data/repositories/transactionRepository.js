@@ -5,6 +5,20 @@ const addTransaction = async (transactionData) => {
   return await Transaction.create(transactionData);
 };
 
+const editTransaction = async (transactionData) => {
+  return await Transaction.update(transactionData, {
+    where: { transaction_id: transactionData.transaction_id },
+  });
+};
+
+const deleteTransaction = async (transaction_id) => {
+  const row = await Transaction.findOne({ where: { transaction_id } });
+
+  if (row) {
+    await row.destroy(); // deletes the row
+  }
+};
+
 const getIncomeTransactions = async () => {
   return await Transaction.findAll({
     where: { transaction_type: "income" },
@@ -17,4 +31,10 @@ const getExpenseTransactions = async () => {
   });
 };
 
-export { addTransaction, getIncomeTransactions, getExpenseTransactions };
+export {
+  addTransaction,
+  editTransaction,
+  deleteTransaction,
+  getIncomeTransactions,
+  getExpenseTransactions,
+};
