@@ -1,30 +1,27 @@
 import React from "react";
 import "./SummaryCard.css";
-import { FaArrowDown, FaArrowUp, FaPiggyBank } from "react-icons/fa";
 
-const SummaryCard = ({ income, expenses, savings }) => {
+const SummaryCard = ({ savings, income, expenses }) => {
   return (
-    <div className="summary-card">
-      <h2>Financial Summary</h2>
-      <div className="summary-field">
-        <FaArrowUp className="icon income-icon" />
-        <div className="summary-details">
-          <label>Income</label>
-          <span className="amount income-amount">{income} ₺</span>
+    <div className="summary-container">
+      <div className="summary-card">
+        <div className="summary-header">
+          <label>Balance</label>
+          <span className="summary-amount balance">{savings} TL</span>
         </div>
       </div>
-      <div className="summary-field">
-        <FaArrowDown className="icon expenses-icon" />
-        <div className="summary-details">
+
+      <div className="summary-card">
+        <div className="summary-header">
+          <label>Incomes</label>
+          <span className="summary-amount income">{income} TL</span>
+        </div>
+      </div>
+
+      <div className="summary-card">
+        <div className="summary-header">
           <label>Expenses</label>
-          <span className="amount expenses-amount">{expenses} ₺</span>
-        </div>
-      </div>
-      <div className="summary-field">
-        <FaPiggyBank className="icon savings-icon" />
-        <div className="summary-details">
-          <label>Savings</label>
-          <span className="amount savings-amount">{savings} ₺</span>
+          <span className="summary-amount expenses">{expenses} TL</span>
         </div>
       </div>
     </div>

@@ -1,66 +1,44 @@
+.summary-container {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+  padding: 10px;
+}
+
 .summary-card {
+  background-color: #f9f9f9;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 30px;
-  background-color: #ffffff;
-  max-width: 350px;
-  margin: 40px auto;
-  text-align: left;
-  position: relative;
-  font-family: "Arial", sans-serif;
-}
-
-.summary-card h2 {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 250px;
   text-align: center;
-  margin-bottom: 20px;
-  color: #333;
-  font-size: 1.5em;
+  position: relative;
 }
 
-.summary-field {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px 0;
-  border-bottom: 1px solid #eee;
+.summary-header {
+  margin-bottom: 10px;
 }
 
-.summary-details {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+.summary-header label {
+  display: block;
+  color: #666;
+  font-size: 1em;
+  margin-bottom: 5px;
 }
 
-.icon {
-  font-size: 1.5em;
-  margin-right: 10px;
-}
-
-.income-icon {
-  color: green;
-}
-
-.expenses-icon {
-  color: red;
-}
-
-.savings-icon {
-  color: blue;
-}
-
-.amount {
-  font-size: 1.2em;
+.summary-amount {
+  font-size: 1.75em;
   font-weight: bold;
 }
 
-.income-amount {
+.balance {
+  color: blue;
+}
+
+.income {
   color: green;
 }
 
-.expenses-amount {
+.expenses {
   color: red;
-}
-
-.savings-amount {
-  color: blue;
 }

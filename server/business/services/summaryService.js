@@ -6,11 +6,15 @@ import {
 
 const getSummary = async () => {
   try {
-    const incomeData = await retrieveIncomeTransactions();
-    const expenseData = await retrieveExpenseTransactions();
+    const [incomeData, expenseData] = await Promise.all([
+      retrieveIncomeTransactions(),
+      retrieveExpenseTransactions(),
+    ]);
+
     let savingsTotal = 0;
     let incomeTotal = 0;
     let expenseTotal = 0;
+
     incomeData.map((income) => {
       incomeTotal += parseFloat(income.amount);
     });

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import SummaryCard from "../components/SummaryCard/SummaryCard";
+import SummaryCard from "../../components/SummaryCard/SummaryCard";
+import "./HomePage.css";
 
 const HomePage = ({ user }) => {
   const [income, setIncome] = useState(0);
@@ -66,12 +67,13 @@ const HomePage = ({ user }) => {
 
   return (
     <div className="homepage">
-      <SummaryCard income={income} expenses={expenses} savings={savings} />
-      <h2>Welcome, {user.username}!</h2>
-      <p>Email: {user.email}</p>
       <button onClick={handleLogout}>Logout</button>
-      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-      {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
+      <div className="success-error">
+        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+        {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
+      </div>
+      <h2 className="welcome">Hello, {user.username}!</h2>
+      <SummaryCard income={income} expenses={expenses} savings={savings} />
     </div>
   );
 };
