@@ -24,7 +24,10 @@ const getTransactionDetail = async (transaction_id) => {
 };
 
 const getAllTransactions = async (user_id) => {
-  return await Transaction.findAll({ where: { user_id } });
+  return await Transaction.findAll({
+    where: { user_id },
+    order: [["transaction_date", "DESC"]],
+  });
 };
 
 const getIncomeTransactions = async () => {
