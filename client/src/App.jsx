@@ -5,7 +5,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
 import ProtectedRoute from "./components/ProtectedRoute";
-import TransactionPage from "./pages/Transaction/TransactionPage";
+import TransactionPage from "./pages/TransactionPage/TransactionPage";
 
 function App() {
   return (

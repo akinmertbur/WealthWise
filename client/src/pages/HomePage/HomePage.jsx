@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import SummaryCard from "../../components/SummaryCard/SummaryCard";
+import TransactionList from "../../components/TransactionList/TransactionList";
 import "./HomePage.css";
 
 const HomePage = ({ user }) => {
@@ -65,6 +66,11 @@ const HomePage = ({ user }) => {
     }
   };
 
+  const handleError = (message) => {
+    setErrorMessage(message);
+    setSuccessMessage(null);
+  };
+
   return (
     <div className="homepage">
       <button onClick={handleLogout}>Logout</button>
@@ -74,6 +80,8 @@ const HomePage = ({ user }) => {
       </div>
       <h2 className="welcome">Hello, {user.username}!</h2>
       <SummaryCard income={income} expenses={expenses} savings={savings} />
+      {/* Pass the userId to the TransactionList component */}
+      <TransactionList userId={user.id} edit={false} onError={handleError} />
     </div>
   );
 };

@@ -1,0 +1,58 @@
+.transaction-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px; /* Adds space between rows */
+  margin-top: 20px;
+}
+
+.transaction-table th,
+.transaction-table td {
+  padding: 12px 15px; /* Adds padding for more space inside the cells */
+  text-align: center;
+  background-color: #2e2e2e; /* Background color for rows */
+  border: none;
+}
+
+.transaction-table th {
+  background-color: #3c3c3c; /* Darker background for the header */
+  font-weight: bold;
+  color: #fff; /* White text for the header */
+  border-bottom: 2px solid #444;
+}
+
+.transaction-table tr {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Adds shadow to rows for more depth */
+}
+
+.transaction-table tr:hover {
+  background-color: #3d3d3d; /* Light hover effect */
+}
+
+.positive-amount {
+  color: green;
+  font-weight: bold;
+}
+
+.negative-amount {
+  color: red;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-top: 30px;
+  margin-bottom: 0px;
+  color: #fff; /* White text for the heading */
+}
+
+.check-msg {
+  margin-top: 0px;
+  margin-bottom: 20px;
+  color: #717070;
+}
+
+.edit-button {
+  width: 40%;
+  margin-top: 0px;
+  margin-right: 10px;
+}

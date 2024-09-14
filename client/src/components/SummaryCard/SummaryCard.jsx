@@ -7,21 +7,23 @@ const SummaryCard = ({ savings, income, expenses }) => {
       <div className="summary-card">
         <div className="summary-header">
           <label>Balance</label>
-          <span className="summary-amount balance">{savings} ₺</span>
+          <span className="summary-amount balance">{savings.toFixed(2)} ₺</span>
         </div>
       </div>
 
       <div className="summary-card">
         <div className="summary-header">
           <label>Incomes</label>
-          <span className="summary-amount income">{income} ₺</span>
+          <span className="summary-amount income">{income.toFixed(2)} ₺</span>
         </div>
       </div>
 
       <div className="summary-card">
         <div className="summary-header">
           <label>Expenses</label>
-          <span className="summary-amount expenses">{expenses} ₺</span>
+          <span className="summary-amount expenses">
+            {expenses.toFixed(2)} ₺
+          </span>
         </div>
       </div>
     </div>

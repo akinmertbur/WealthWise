@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "./AddTransactionForm.css";
+import "./EditTransactionForm.css";
 
-const AddTransactionForm = ({ user, onSuccess, onError }) => {
+const AddTransactionForm = ({ transaction, user, onSuccess, onError }) => {
   const [categoryId, setCategoryId] = useState("");
   const [amount, setAmount] = useState("");
   const [transactionType, setTransactionType] = useState("");
@@ -9,6 +9,21 @@ const AddTransactionForm = ({ user, onSuccess, onError }) => {
   const [transactionDate, setTransactionDate] = useState("");
   const [categories, setCategories] = useState([]);
   const [loadingCategories, setLoadingCategories] = useState(false);
+
+  // Sync the state with the transaction prop when it changes
+  useEffect(() => {
+    if (transaction) {
+      setCategoryId(transaction.category_id || "");
+      setAmount(transaction.amount || "");
+      setTransactionType(transaction.transaction_type || "");
+      setDescription(transaction.description || "");
+      setTransactionDate(
+        transaction.transaction_date
+          ? new Date(transaction.transaction_date).toISOString().split("T")[0]
+          : ""
+      );
+    }
+  }, [transaction]); // Add `transaction` as a dependency to re-run the effect when it changes
 
   // Fetch categories when the component is mounted
   useEffect(() => {
@@ -32,16 +47,17 @@ const AddTransactionForm = ({ user, onSuccess, onError }) => {
     fetchCategories();
   }, [onError]);
 
-  const handleAddTransaction = async (e) => {
+  const handleEditTransaction = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("/api/transaction/add", {
-        method: "POST",
+      const response = await fetch("/api/transaction/edit", {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          transactionId: transaction.transaction_id,
           userId: user.id,
           categoryId,
           amount,
@@ -67,7 +83,7 @@ const AddTransactionForm = ({ user, onSuccess, onError }) => {
   };
 
   return (
-    <form onSubmit={handleAddTransaction}>
+    <form onSubmit={handleEditTransaction}>
       <div>
         <label>Category:</label>
         <select
@@ -143,7 +159,7 @@ const AddTransactionForm = ({ user, onSuccess, onError }) => {
           required
         />
       </div>
-      <button type="submit">Add</button>
+      <button type="submit">Edit</button>
     </form>
   );
 };
