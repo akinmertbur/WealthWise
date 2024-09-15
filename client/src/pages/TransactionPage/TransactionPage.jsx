@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import AddTransactionForm from "../../components/AddTransactionForm/AddTransactionForm";
-import EditTransactionForm from "../../components/EditTransactionForm/EditTransactionForm";
+import AddEditTransactionForm from "../../components/AddEditTransactionForm/AddEditTransactionForm";
 import Modal from "../../components/Modal/Modal";
 import TransactionList from "../../components/TransactionList/TransactionList";
 import "./TransactionPage.css";
@@ -8,15 +7,15 @@ import "./TransactionPage.css";
 const TransactionPage = ({ user }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
-  const [showModalAdd, setShowModalAdd] = useState(false); // State to control add modal visibility
-  const [showModalEdit, setShowModalEdit] = useState(false); // State to control edit modal visibility
+  const [showModal, setShowModal] = useState(false); // State to control modal visibility
   const [transaction, setTransaction] = useState(null);
   const [updateList, setUpdateList] = useState(false);
+  const [addEdit, setAddEdit] = useState(false);
 
   const handleSuccess = (message) => {
     setSuccessMessage(message);
     setErrorMessage(null);
-    showModalAdd ? setShowModalAdd(false) : setShowModalEdit(false); // Close modals on success
+    setShowModal(false); // Close the modal on success
     setUpdateList(!updateList);
   };
 
@@ -39,7 +38,11 @@ const TransactionPage = ({ user }) => {
 
       if (response.ok) {
         setTransaction(data.result); // Store the transaction in state
-        setShowModalEdit(true); // Open the edit modal
+        if (!addEdit) {
+          setAddEdit(true);
+        }
+
+        setShowModal(true); // Open the edit modal
       } else {
         setErrorMessage(data.message);
       }
@@ -55,7 +58,17 @@ const TransactionPage = ({ user }) => {
 
       <button
         className="add-transaction-button"
-        onClick={() => setShowModalAdd(true)}
+        onClick={() => {
+          if (transaction) {
+            setTransaction(null);
+          }
+
+          if (addEdit) {
+            setAddEdit(false);
+          }
+
+          setShowModal(true);
+        }}
       >
         Add Transaction
       </button>
@@ -69,22 +82,15 @@ const TransactionPage = ({ user }) => {
         onError={handleError}
       />
 
-      {/* Modal for adding transaction */}
-      <Modal show={showModalAdd} onClose={() => setShowModalAdd(false)}>
-        <AddTransactionForm
-          user={user}
-          onSuccess={handleSuccess}
-          onError={handleError}
-        />
-      </Modal>
-
-      {/* Modal for the editing transaction */}
-      <Modal show={showModalEdit} onClose={() => setShowModalEdit(false)}>
-        <EditTransactionForm
+      {/* Modal for adding/editing transaction
+          Adding or editing determined based on 'edit' prop */}
+      <Modal show={showModal} onClose={() => setShowModal(false)}>
+        <AddEditTransactionForm
           transaction={transaction}
           user={user}
           onSuccess={handleSuccess}
           onError={handleError}
+          edit={addEdit}
         />
       </Modal>
     </div>

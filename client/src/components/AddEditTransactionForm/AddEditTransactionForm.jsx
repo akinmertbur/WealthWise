@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
-import "./AddTransactionForm.css";
+import "./AddEditTransactionForm.css";
 
-const AddTransactionForm = ({ user, onSuccess, onError }) => {
+const AddTransactionForm = ({
+  transaction,
+  user,
+  onSuccess,
+  onError,
+  edit,
+}) => {
   const [categoryId, setCategoryId] = useState("");
   const [amount, setAmount] = useState("");
   const [transactionType, setTransactionType] = useState("");
@@ -9,6 +15,20 @@ const AddTransactionForm = ({ user, onSuccess, onError }) => {
   const [transactionDate, setTransactionDate] = useState("");
   const [categories, setCategories] = useState([]);
   const [loadingCategories, setLoadingCategories] = useState(false);
+
+  useEffect(() => {
+    if (edit && transaction) {
+      setCategoryId(transaction.category_id || "");
+      setAmount(transaction.amount || "");
+      setTransactionType(transaction.transaction_type || "");
+      setDescription(transaction.description || "");
+      setTransactionDate(
+        transaction.transaction_date
+          ? new Date(transaction.transaction_date).toISOString().split("T")[0]
+          : ""
+      );
+    }
+  }, [edit, transaction]); // Add `edit` and `transaction` as dependencies
 
   // Fetch categories when the component is mounted
   useEffect(() => {
@@ -66,11 +86,47 @@ const AddTransactionForm = ({ user, onSuccess, onError }) => {
     }
   };
 
+  const handleEditTransaction = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("/api/transaction/edit", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          transactionId: transaction.transaction_id,
+          userId: user.id,
+          categoryId,
+          amount,
+          transactionType,
+          description,
+          transactionDate,
+          currency: "TL",
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        onSuccess(data.message); // Notify parent of success
+      } else {
+        onError(data.message); // Notify parent of error
+      }
+    } catch (error) {
+      onError(
+        "An error occurred during transaction submission. Please try again."
+      );
+    }
+  };
+
   return (
-    <form onSubmit={handleAddTransaction}>
+    <form onSubmit={edit ? handleEditTransaction : handleAddTransaction}>
       <div>
-        <label>Category:</label>
+        <label htmlFor="categoryId">Category:</label>
         <select
+          id="categoryId"
           value={categoryId}
           onChange={(e) => setCategoryId(e.target.value)}
           required
@@ -88,8 +144,9 @@ const AddTransactionForm = ({ user, onSuccess, onError }) => {
         </select>
       </div>
       <div>
-        <label>Amount:</label>
+        <label htmlFor="amount">Amount:</label>
         <input
+          id="amount"
           type="number"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
@@ -126,8 +183,9 @@ const AddTransactionForm = ({ user, onSuccess, onError }) => {
         </div>
       </div>
       <div>
-        <label>Description:</label>
+        <label htmlFor="description">Description:</label>
         <input
+          id="description"
           type="text"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
@@ -135,15 +193,16 @@ const AddTransactionForm = ({ user, onSuccess, onError }) => {
         />
       </div>
       <div>
-        <label>Transaction Date:</label>
+        <label htmlFor="date">Transaction Date:</label>
         <input
+          id="date"
           type="date"
           value={transactionDate}
           onChange={(e) => setTransactionDate(e.target.value)}
           required
         />
       </div>
-      <button type="submit">Add</button>
+      <button type="submit">{edit ? "Edit" : "Add"}</button>
     </form>
   );
 };
