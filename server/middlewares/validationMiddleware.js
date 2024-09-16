@@ -118,3 +118,83 @@ export const validateGetAllTransactions = [
     next();
   },
 ];
+
+export const validateAddGoal = [
+  check("userId").notEmpty().withMessage("User Id is required!"),
+  check("goalName").notEmpty().withMessage("Goal name cannot be empty!"),
+  check("targetAmount")
+    .notEmpty()
+    .withMessage("Target amount cannot be empty!"),
+  check("currentAmount")
+    .notEmpty()
+    .withMessage("Current amount cannot be empty!"),
+  check("deadline").notEmpty().withMessage("Deadline cannot be empty!"),
+  check("priorityLevel")
+    .notEmpty()
+    .withMessage("Priority level cannot be empty!"),
+  check("status").notEmpty().withMessage("Status cannot be empty!"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
+export const validateEditGoal = [
+  check("goalId").notEmpty().withMessage("Goal Id is required!"),
+  check("userId").notEmpty().withMessage("User Id is required!"),
+  check("goalName").notEmpty().withMessage("Goal name cannot be empty!"),
+  check("targetAmount")
+    .notEmpty()
+    .withMessage("Target amount cannot be empty!"),
+  check("currentAmount")
+    .notEmpty()
+    .withMessage("Current amount cannot be empty!"),
+  check("deadline").notEmpty().withMessage("Deadline cannot be empty!"),
+  check("priorityLevel")
+    .notEmpty()
+    .withMessage("Priority level cannot be empty!"),
+  check("status").notEmpty().withMessage("Status cannot be empty!"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
+export const validateDeleteGoal = [
+  check("goalId").notEmpty().withMessage("Goal Id is required!"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
+export const validateGetGoalDetail = [
+  check("goalId").notEmpty().withMessage("Goal Id is required!"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
+export const validateGetAllGoals = [
+  check("userId").notEmpty().withMessage("User Id is required!"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];

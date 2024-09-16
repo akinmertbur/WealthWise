@@ -29,7 +29,9 @@ const insertTransaction = async (
       !transactionDate ||
       !currency
     ) {
-      throw new Error("There are missing values! Enter all the input values!");
+      throw new Error(
+        "There are missing transaction values! Enter all the input values!"
+      );
     }
 
     return await addTransaction({
@@ -68,7 +70,9 @@ const updateTransaction = async (
       !transactionDate ||
       !currency
     ) {
-      throw new Error("There are missing values! Enter all the input values!");
+      throw new Error(
+        "There are missing transaction values! Enter all the input values!"
+      );
     }
 
     return await editTransaction({
@@ -112,7 +116,7 @@ const retrieveTransactionDetail = async (transactionId) => {
 
     return await getTransactionDetail(transactionId);
   } catch (err) {
-    throw new Error(`Failed to retrieve transaction: ${err.message}`);
+    throw new Error(`Failed to retrieve transaction detail: ${err.message}`);
   }
 };
 
