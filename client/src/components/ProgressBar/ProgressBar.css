@@ -1,0 +1,16 @@
+/* src/components/ProgressBar/ProgressBar.css */
+.progress-bar {
+  width: 100%;
+  background-color: #e0e0df;
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 30px;
+  background-color: #76c7c0;
+  text-align: center;
+  line-height: 30px;
+  color: white;
+  border-radius: 25px 0 0 25px;
+}
