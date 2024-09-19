@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import ProgressBar from "../../components/ProgressBar/ProgressBar.jsx";
 import Modal from "../../components/Modal/Modal";
 import AddEditGoalForm from "../../components/AddEditGoalForm/AddEditGoalForm.jsx";
+import "./GoalsPage.css";
 
 function GoalsPage({ user }) {
   const userId = user.id;
@@ -10,6 +11,8 @@ function GoalsPage({ user }) {
   const [successMessage, setSuccessMessage] = useState(null);
   const [goals, setGoals] = useState([]);
   const [showModal, setShowModal] = useState(false); // State to control modal visibility
+  const [goal, setGoal] = useState(null);
+  const [addEdit, setAddEdit] = useState(false);
 
   // Fetch goals function
   const fetchGoals = async () => {
@@ -55,6 +58,35 @@ function GoalsPage({ user }) {
     setSuccessMessage(null);
   };
 
+  // Edit handler: when edit button is clicked,
+  // the goal is retrieved and the model is opened.
+  const handleEdit = async (goalId) => {
+    try {
+      const response = await fetch("/api/goal/getGoal", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ goalId }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setGoal(data.result); // Store the goal in state
+        if (!addEdit) {
+          setAddEdit(true);
+        }
+
+        setShowModal(true); // Open the edit modal
+      } else {
+        setErrorMessage(data.message);
+      }
+    } catch (err) {
+      setErrorMessage("An error occurred while fetching the goal.");
+    }
+  };
+
   return (
     <div className="App">
       <h1>Financial Goal Tracker</h1>
@@ -62,40 +94,58 @@ function GoalsPage({ user }) {
       {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
       {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
 
-      <button className="add-goal-button" onClick={() => setShowModal(true)}>
+      <button
+        className="add-goal-button"
+        onClick={() => {
+          if (goal) {
+            setGoal(null);
+          }
+
+          if (addEdit) {
+            setAddEdit(false);
+          }
+
+          setShowModal(true);
+        }}
+      >
         Add Goal
       </button>
 
+      {/* Display the goals with progress bar*/}
       {goals.length > 0 ? (
         goals.map((goal) => (
-          <div key={goal.goal_id}>
+          <div key={goal.goal_id} className="goal">
             <h3>{goal.goal_name}</h3>
-            <ProgressBar
-              targetAmount={goal.target_amount}
-              currentAmount={goal.current_amount} // Fixed typo
-              onError={handleError}
-            />
+            <div className="goal-detail">
+              <ProgressBar
+                targetAmount={goal.target_amount}
+                currentAmount={goal.current_amount} // Fixed typo
+                onError={handleError}
+              />
+              <button
+                onClick={() => handleEdit(goal.goal_id)}
+                className="edit-button"
+              >
+                Edit
+              </button>
+            </div>
           </div>
         ))
       ) : (
         <p>No goals found.</p>
       )}
 
+      {/* Modal for adding/editing goal
+          Adding or editing determined based on 'edit' prop */}
       <Modal show={showModal} onClose={() => setShowModal(false)}>
         <AddEditGoalForm
+          goal={goal}
           user={user}
           onSuccess={handleSuccess}
           onError={handleError}
+          edit={addEdit}
         />
       </Modal>
-
-      {/* <input
-        type="number"
-        value={progress}
-        onChange={handleInputChange}
-        max="100"
-        min="0"
-      /> */}
     </div>
   );
 }

@@ -1,0 +1,14 @@
+.goal h3 {
+  margin: 0;
+  margin: 10px 0px 10px 0px;
+  width: 1000px;
+}
+
+.goal-detail {
+  display: flex;
+  margin-bottom: 50px;
+}
+
+.edit-button {
+  margin-left: 20px;
+}

@@ -24,7 +24,7 @@ const getGoalDetail = async (goal_id) => {
 const getAllGoals = async (user_id) => {
   return await Goal.findAll({
     where: { user_id },
-    order: [["deadline", "DESC"]],
+    order: [["deadline", "ASC"]],
   });
 };
 
