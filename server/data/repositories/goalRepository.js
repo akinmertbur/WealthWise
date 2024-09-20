@@ -28,4 +28,15 @@ const getAllGoals = async (user_id) => {
   });
 };
 
-export { addGoal, editGoal, deleteGoal, getGoalDetail, getAllGoals };
+const editCurrentAmount = async (goal_id, current_amount) => {
+  return await Goal.update({ current_amount }, { where: { goal_id } });
+};
+
+export {
+  addGoal,
+  editGoal,
+  deleteGoal,
+  getGoalDetail,
+  getAllGoals,
+  editCurrentAmount,
+};

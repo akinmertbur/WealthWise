@@ -5,6 +5,7 @@ import {
   removeGoal,
   retrieveGoalDetail,
   retrieveAllGoals,
+  updateCurrentAmount,
 } from "../business/services/goalService.js";
 import { log, error } from "../utils/logger.js";
 
@@ -112,4 +113,25 @@ const getAllGoals = async (req, res) => {
   }
 };
 
-export { addGoal, editGoal, deleteGoal, getGoalDetail, getAllGoals };
+const editCurrentAmount = async (req, res) => {
+  try {
+    const { goalId, currentAmount } = req.body;
+
+    const result = await updateCurrentAmount(goalId, currentAmount);
+
+    log(`Current amount of the goal edited successfully!`);
+    res.status(200).json({ result });
+  } catch (err) {
+    error(`Failed to edit current amount of the goal: ${err.message}`);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+export {
+  addGoal,
+  editGoal,
+  deleteGoal,
+  getGoalDetail,
+  getAllGoals,
+  editCurrentAmount,
+};

@@ -5,6 +5,7 @@ import {
   deleteGoal,
   getGoalDetail,
   getAllGoals,
+  editCurrentAmount,
 } from "../../data/repositories/goalRepository.js";
 
 const insertGoal = async (
@@ -127,10 +128,28 @@ const retrieveAllGoals = async (userId) => {
   }
 };
 
+const updateCurrentAmount = async (goalId, currentAmount) => {
+  try {
+    // Check whether goalId and currentAmount are entered
+    if (!goalId || !currentAmount) {
+      throw new Error(
+        "Goal Id and Current Amount are required for updating the current amount of the goal!"
+      );
+    }
+
+    return await editCurrentAmount(goalId, currentAmount);
+  } catch (err) {
+    throw new Error(
+      `Failed to update the current amount of the goal: ${err.message}`
+    );
+  }
+};
+
 export {
   insertGoal,
   updateGoal,
   removeGoal,
   retrieveGoalDetail,
   retrieveAllGoals,
+  updateCurrentAmount,
 };

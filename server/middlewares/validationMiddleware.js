@@ -198,3 +198,17 @@ export const validateGetAllGoals = [
     next();
   },
 ];
+
+export const validateEditCurrentAmount = [
+  check("goalId").notEmpty().withMessage("Goal Id is required!"),
+  check("currentAmount")
+    .notEmpty()
+    .withMessage("Current amount of the goal is required!"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];

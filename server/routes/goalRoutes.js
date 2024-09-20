@@ -6,6 +6,7 @@ import {
   deleteGoal,
   getGoalDetail,
   getAllGoals,
+  editCurrentAmount,
 } from "../controllers/goalController.js";
 import {
   validateAddGoal,
@@ -13,6 +14,7 @@ import {
   validateDeleteGoal,
   validateGetGoalDetail,
   validateGetAllGoals,
+  validateEditCurrentAmount,
 } from "../middlewares/validationMiddleware.js";
 
 const router = express.Router();
@@ -22,5 +24,10 @@ router.put("/edit", validateEditGoal, editGoal);
 router.delete("/delete", validateDeleteGoal, deleteGoal);
 router.post("/getGoal", validateGetGoalDetail, getGoalDetail);
 router.post("/getAll", validateGetAllGoals, getAllGoals);
+router.patch(
+  "/editCurrentAmount",
+  validateEditCurrentAmount,
+  editCurrentAmount
+);
 
 export default router;
