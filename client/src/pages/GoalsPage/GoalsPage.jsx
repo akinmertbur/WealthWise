@@ -48,7 +48,9 @@ function GoalsPage({ user }) {
   const handleSuccess = (message) => {
     setSuccessMessage(message);
     setErrorMessage(null);
-    setShowModal(false); // Close the modal on success
+    if (showModal) {
+      setShowModal(false); // Close the modal on success
+    }
     fetchGoals(); // Re-fetch goals immediately after success
   };
 
@@ -80,17 +82,37 @@ function GoalsPage({ user }) {
 
         setShowModal(true); // Open the edit modal
       } else {
-        setErrorMessage(data.message);
+        handleError(data.message);
       }
     } catch (err) {
-      setErrorMessage("An error occurred while fetching the goal.");
+      handleError("An error occurred while fetching the goal.");
+    }
+  };
+
+  const handleDelete = async (goalId) => {
+    try {
+      const response = await fetch("/api/goal/delete", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ goalId }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        handleSuccess(data.message);
+      } else {
+        handleError(data.message);
+      }
+    } catch (err) {
+      handleError("An error occurred while deleting the goal.");
     }
   };
 
   return (
     <div className="App">
-      <h1>Financial Goal Tracker</h1>
-
       {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
       {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
 
@@ -115,19 +137,59 @@ function GoalsPage({ user }) {
       {goals.length > 0 ? (
         goals.map((goal) => (
           <div key={goal.goal_id} className="goal">
-            <h3>{goal.goal_name}</h3>
-            <div className="goal-detail">
-              <ProgressBar
-                targetAmount={goal.target_amount}
-                currentAmount={goal.current_amount} // Fixed typo
-                onError={handleError}
-              />
+            <div className="goal-heading">
+              <h3>{goal.goal_name}</h3>
               <button
                 onClick={() => handleEdit(goal.goal_id)}
-                className="edit-button"
+                className="edit-button edit-delete-goal-button"
               >
-                Edit
+                <svg
+                  fill="#000000"
+                  version="1.1"
+                  id="Capa_1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlnsXlink="http://www.w3.org/1999/xlink"
+                  width="17px"
+                  height="17px"
+                  viewBox="0 0 528.899 528.899"
+                  xmlSpace="preserve"
+                >
+                  <g>
+                    <path
+                      d="M328.883,89.125l107.59,107.589l-272.34,272.34L56.604,361.465L328.883,89.125z M518.113,63.177l-47.981-47.981
+		c-18.543-18.543-48.653-18.543-67.259,0l-45.961,45.961l107.59,107.59l53.611-53.611
+		C532.495,100.753,532.495,77.559,518.113,63.177z M0.3,512.69c-1.958,8.812,5.998,16.708,14.811,14.565l119.891-29.069
+		L27.473,390.597L0.3,512.69z"
+                    />
+                  </g>
+                </svg>
               </button>
+
+              <button
+                onClick={() => handleDelete(goal.goal_id)}
+                className="edit-button edit-delete-goal-button"
+              >
+                <svg
+                  width="17px"
+                  height="17px"
+                  viewBox="0 0 1024 1024"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill="#000000"
+                    d="M352 192V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64H96a32 32 0 0 1 0-64h256zm64 0h192v-64H416v64zM192 960a32 32 0 0 1-32-32V256h704v672a32 32 0 0 1-32 32H192zm224-192a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32zm192 0a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div className="goal-detail">
+              <ProgressBar
+                goalId={goal.goal_id}
+                targetAmount={goal.target_amount}
+                currentAmount={goal.current_amount}
+                onSuccess={handleSuccess}
+                onError={handleError}
+              />
             </div>
           </div>
         ))

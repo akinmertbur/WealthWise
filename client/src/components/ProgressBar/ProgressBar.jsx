@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "./ProgressBar.css";
 
-const ProgressBar = ({ targetAmount, currentAmount, onError }) => {
+const ProgressBar = ({
+  goalId,
+  targetAmount,
+  currentAmount,
+  onSuccess,
+  onError,
+}) => {
   const [progress, setProgress] = useState(0);
+  const [newCurrentAmount, setNewCurrentAmount] = useState("");
 
   // Calculate progress when targetAmount or currentAmount change
   useEffect(() => {
@@ -22,13 +29,58 @@ const ProgressBar = ({ targetAmount, currentAmount, onError }) => {
     handleProgress();
   }, [targetAmount, currentAmount]); // Re-calculate when targetAmount or currentAmount change
 
+  const handleEditCurrentAmount = async (newCurrentAmount) => {
+    try {
+      const response = await fetch("/api/goal/editCurrentAmount", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ goalId, currentAmount: newCurrentAmount }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        onSuccess(`Current Amount of the goal is edited successfully!`);
+        setNewCurrentAmount("");
+      } else {
+        onError(data.message);
+      }
+    } catch (err) {
+      onError(
+        "An error occurred while editing the current amount of the goal."
+      );
+    }
+  };
+
   return (
-    <div className="progress-bar">
-      <div
-        className="progress"
-        style={{ width: `${Math.min(progress, 100)}%` }}
-      >
-        {Math.min(progress, 100).toFixed(2)}%
+    <div className="progress-container">
+      <div className="progress-bar">
+        <div
+          className="progress"
+          style={{ width: `${Math.min(progress, 100)}%` }}
+        >
+          {Math.min(progress, 100).toFixed(2)}%
+        </div>
+      </div>
+      <div className="current-amount">
+        <input
+          id={"setCurrentAmount" + goalId}
+          type="number"
+          value={newCurrentAmount}
+          onChange={(e) => setNewCurrentAmount(e.target.value)}
+          placeholder="Set Current Amount"
+          required
+        />
+      </div>
+      <div>
+        <button
+          className="edit-amount-btn"
+          onClick={() => handleEditCurrentAmount(newCurrentAmount)}
+        >
+          Set
+        </button>
       </div>
     </div>
   );
