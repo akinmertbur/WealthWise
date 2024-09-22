@@ -5,6 +5,7 @@ const ProgressBar = ({
   goalId,
   targetAmount,
   currentAmount,
+  isSettable,
   onSuccess,
   onError,
 }) => {
@@ -64,24 +65,28 @@ const ProgressBar = ({
           {Math.min(progress, 100).toFixed(2)}%
         </div>
       </div>
-      <div className="current-amount">
-        <input
-          id={"setCurrentAmount" + goalId}
-          type="number"
-          value={newCurrentAmount}
-          onChange={(e) => setNewCurrentAmount(e.target.value)}
-          placeholder="Set Current Amount"
-          required
-        />
-      </div>
-      <div>
-        <button
-          className="edit-amount-btn"
-          onClick={() => handleEditCurrentAmount(newCurrentAmount)}
-        >
-          Set
-        </button>
-      </div>
+      {isSettable && (
+        <>
+          <div className="current-amount">
+            <input
+              id={"setCurrentAmount" + goalId}
+              type="number"
+              value={newCurrentAmount}
+              onChange={(e) => setNewCurrentAmount(e.target.value)}
+              placeholder="Set Current Amount"
+              required
+            />
+          </div>
+          <div>
+            <button
+              className="edit-amount-btn"
+              onClick={() => handleEditCurrentAmount(newCurrentAmount)}
+            >
+              Set
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };

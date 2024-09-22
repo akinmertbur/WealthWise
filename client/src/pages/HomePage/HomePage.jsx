@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import SummaryCard from "../../components/SummaryCard/SummaryCard";
 import TransactionList from "../../components/TransactionList/TransactionList";
+import GoalSummary from "../../components/GoalSummary/GoalSummary";
 import "./HomePage.css";
 
 const HomePage = ({ user }) => {
@@ -66,6 +67,13 @@ const HomePage = ({ user }) => {
     }
   };
 
+  // Success handler
+  const handleSuccess = (message) => {
+    setSuccessMessage(message);
+    setErrorMessage(null);
+  };
+
+  // Error handler
   const handleError = (message) => {
     setErrorMessage(message);
     setSuccessMessage(null);
@@ -82,6 +90,11 @@ const HomePage = ({ user }) => {
       <SummaryCard income={income} expenses={expenses} savings={savings} />
       {/* Pass the userId to the TransactionList component */}
       <TransactionList userId={user.id} edit={false} onError={handleError} />
+      <GoalSummary
+        userId={user.id}
+        onSuccess={handleSuccess}
+        onError={handleError}
+      />
     </div>
   );
 };

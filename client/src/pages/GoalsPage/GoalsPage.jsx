@@ -152,6 +152,7 @@ function GoalsPage({ user }) {
                 goalId={goal.goal_id}
                 targetAmount={goal.target_amount}
                 currentAmount={goal.current_amount}
+                isSettable={true}
                 onSuccess={handleSuccess}
                 onError={handleError}
               />
