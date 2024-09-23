@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import SummaryCard from "../../components/SummaryCard/SummaryCard";
 import TransactionList from "../../components/TransactionList/TransactionList";
 import GoalSummary from "../../components/GoalSummary/GoalSummary";
+import ExpensesPieChart from "../../components/ExpensesPieChart/ExpensesPieChart";
+import ExpensesIncomesBarChart from "../../components/ExpensesIncomesBarChart/ExpensesIncomesBarChart";
 import "./HomePage.css";
 
 const HomePage = ({ user }) => {
@@ -95,6 +97,10 @@ const HomePage = ({ user }) => {
         onSuccess={handleSuccess}
         onError={handleError}
       />
+      <div className="summary-charts">
+        <ExpensesPieChart />
+        <ExpensesIncomesBarChart userId={user.id} onError={handleError} />
+      </div>
     </div>
   );
 };
