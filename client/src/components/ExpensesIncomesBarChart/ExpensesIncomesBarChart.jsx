@@ -59,11 +59,24 @@ const ExpensesIncomesBarChart = function ({ userId, onError }) {
   useEffect(() => {
     let incomesTotal = 0;
     let expensesTotal = 0;
+
+    // Today's date
+    let today = new Date();
+
+    // Calculate the date 6 months before today
+    let sixMonthsEarlier = new Date();
+    sixMonthsEarlier.setMonth(today.getMonth() - 6);
+
     transactions.forEach((transaction) => {
-      if (transaction.transaction_type === "income") {
-        incomesTotal += Number(transaction.amount);
-      } else {
-        expensesTotal += Number(transaction.amount);
+      // Ensure transaction_date is a Date object
+      let transactionDate = new Date(transaction.transaction_date);
+
+      if (transactionDate >= sixMonthsEarlier) {
+        if (transaction.transaction_type === "income") {
+          incomesTotal += Number(transaction.amount);
+        } else {
+          expensesTotal += Number(transaction.amount);
+        }
       }
     });
 

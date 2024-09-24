@@ -98,7 +98,7 @@ const HomePage = ({ user }) => {
         onError={handleError}
       />
       <div className="summary-charts">
-        <ExpensesPieChart />
+        <ExpensesPieChart userId={user.id} onError={handleError} />
         <ExpensesIncomesBarChart userId={user.id} onError={handleError} />
       </div>
     </div>
