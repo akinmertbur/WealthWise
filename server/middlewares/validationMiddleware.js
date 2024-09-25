@@ -212,3 +212,102 @@ export const validateEditCurrentAmount = [
     next();
   },
 ];
+
+export const validateAddBudget = [
+  check("userId").notEmpty().withMessage("User Id is required!"),
+  check("categoryId").notEmpty().withMessage("Category Id is required!"),
+  check("month").notEmpty().withMessage("Month cannot be empty!"),
+  check("year").notEmpty().withMessage("Year cannot be empty!"),
+  check("plannedAmount")
+    .notEmpty()
+    .withMessage("Planned Amount cannot be empty!"),
+  check("actualAmount")
+    .notEmpty()
+    .withMessage("Actual Amount cannot be empty!"),
+  check("carryoverAmount")
+    .notEmpty()
+    .withMessage("Carryover Amount cannot be empty!"),
+  check("budgetAlertThreshold")
+    .notEmpty()
+    .withMessage("Budget Alert Threshold cannot be empty!"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
+export const validateEditBudget = [
+  check("budgetId").notEmpty().withMessage("Budget Id is required!"),
+  check("userId").notEmpty().withMessage("User Id is required!"),
+  check("categoryId").notEmpty().withMessage("Category Id is required!"),
+  check("month").notEmpty().withMessage("Month cannot be empty!"),
+  check("year").notEmpty().withMessage("Year cannot be empty!"),
+  check("plannedAmount")
+    .notEmpty()
+    .withMessage("Planned Amount cannot be empty!"),
+  check("actualAmount")
+    .notEmpty()
+    .withMessage("Actual Amount cannot be empty!"),
+  check("carryoverAmount")
+    .notEmpty()
+    .withMessage("Carryover Amount cannot be empty!"),
+  check("budgetAlertThreshold")
+    .notEmpty()
+    .withMessage("Budget Alert Threshold cannot be empty!"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
+export const validateDeleteBudget = [
+  check("budgetId").notEmpty().withMessage("Budget Id is required!"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
+export const validateGetBudgetDetail = [
+  check("budgetId").notEmpty().withMessage("Budget Id is required!"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
+export const validateGetAllBudgets = [
+  check("userId").notEmpty().withMessage("User Id is required!"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
+export const validateGetAllBudgetsByPeriod = [
+  check("userId").notEmpty().withMessage("User Id is required!"),
+  check("month").notEmpty().withMessage("Month cannot be empty!"),
+  check("year").notEmpty().withMessage("Year cannot be empty!"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
