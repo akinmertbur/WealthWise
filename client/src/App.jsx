@@ -7,6 +7,7 @@ import ProfilePage from "./pages/ProfilePage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import TransactionPage from "./pages/TransactionPage/TransactionPage";
 import GoalsPage from "./pages/GoalsPage/GoalsPage";
+import BudgetPage from "./pages/BudgetPage/BudgetPage";
 
 function App() {
   return (
@@ -51,6 +52,14 @@ function App() {
           element={
             <ProtectedRoute>
               <GoalsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/budget"
+          element={
+            <ProtectedRoute>
+              <BudgetPage />
             </ProtectedRoute>
           }
         />

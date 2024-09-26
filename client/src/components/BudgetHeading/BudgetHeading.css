@@ -1,0 +1,30 @@
+.edit-delete-budget-button {
+  margin: 0;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  width: 5%;
+}
+
+.budget-title {
+  width: 1000px;
+  display: flex;
+  margin: 0 0 10px 0;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.budget-title p {
+  margin: 0 20px 10px 0;
+}
+
+h3 {
+  margin: 0;
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+
+.budget-buttons {
+  display: flex;
+  justify-content: center;
+  margin: 80px 0 0 0;
+}

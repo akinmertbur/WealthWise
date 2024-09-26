@@ -5,4 +5,8 @@ const getAll = async () => {
   return await Category.findAll();
 };
 
-export { getAll };
+const getCategoryDetail = async (category_id) => {
+  return await Category.findOne({ where: { category_id } });
+};
+
+export { getAll, getCategoryDetail };

@@ -32,6 +32,7 @@ const getAllBudgets = async (user_id) => {
 const getAllBudgetsByPeriod = async (user_id, month, year) => {
   return await Budget.findAll({
     where: { user_id, month, year },
+    order: [["category_id", "ASC"]],
   });
 };
 
