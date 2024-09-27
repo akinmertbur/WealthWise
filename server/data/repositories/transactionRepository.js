@@ -42,6 +42,13 @@ const getExpenseTransactions = async () => {
   });
 };
 
+const getTransactionsByCategoryId = async (user_id, category_id) => {
+  return await Transaction.findAll({
+    where: { user_id, category_id },
+    order: [["transaction_date", "DESC"]],
+  });
+};
+
 export {
   addTransaction,
   editTransaction,
@@ -50,4 +57,5 @@ export {
   getAllTransactions,
   getIncomeTransactions,
   getExpenseTransactions,
+  getTransactionsByCategoryId,
 };

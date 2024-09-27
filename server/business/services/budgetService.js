@@ -7,6 +7,10 @@ import {
   getAllBudgets,
   getAllBudgetsByPeriod,
 } from "../../data/repositories/budgetRepository.js";
+import {
+  retrieveTransactionsByCategoryId,
+  filterTransactionsByDate,
+} from "./transactionService.js";
 
 const insertBudget = async (
   userId,
@@ -34,6 +38,8 @@ const insertBudget = async (
         "There are missing budget values! Enter all the input values!"
       );
     }
+
+    actualAmount = await computeActualAmount(userId, categoryId, month, year);
 
     return await addBudget({
       user_id: userId,
@@ -148,6 +154,41 @@ const retrieveAllBudgetsByPeriod = async (userId, month, year) => {
   }
 };
 
+const computeActualAmount = async (userId, categoryId, month, year) => {
+  try {
+    if (!userId || !categoryId || !month || !year) {
+      throw new Error(
+        "User Id, category Id, month and year are required for computing the actual amount!"
+      );
+    }
+
+    let totalAmount = 0;
+
+    const transactions = await retrieveTransactionsByCategoryId(
+      userId,
+      categoryId
+    );
+
+    if (transactions) {
+      const filteredTransactions = await filterTransactionsByDate(
+        transactions,
+        month,
+        year
+      );
+
+      if (filteredTransactions) {
+        filteredTransactions.forEach((transaction) => {
+          totalAmount += parseFloat(transaction.amount);
+        });
+      }
+    }
+
+    return totalAmount;
+  } catch (err) {
+    throw new Error(`Failed to compute the actual amount: ${err.message}`);
+  }
+};
+
 export {
   insertBudget,
   updateBudget,
@@ -155,4 +196,5 @@ export {
   retrieveBudgetDetail,
   retrieveAllBudgets,
   retrieveAllBudgetsByPeriod,
+  computeActualAmount,
 };

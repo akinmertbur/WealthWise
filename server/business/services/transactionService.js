@@ -7,6 +7,7 @@ import {
   getAllTransactions,
   getIncomeTransactions,
   getExpenseTransactions,
+  getTransactionsByCategoryId,
 } from "../../data/repositories/transactionRepository.js";
 
 const insertTransaction = async (
@@ -153,6 +154,49 @@ const retrieveExpenseTransactions = async () => {
   }
 };
 
+const retrieveTransactionsByCategoryId = async (userId, categoryId) => {
+  try {
+    // Check whether all the input values are entered
+    if (!userId || !categoryId) {
+      throw new Error(
+        "There are missing transaction values! Enter all the input values!"
+      );
+    }
+
+    return await getTransactionsByCategoryId(userId, categoryId);
+  } catch (err) {
+    throw new Error(
+      `Failed to retrieve all transactions by category Id: ${err.message}`
+    );
+  }
+};
+
+const filterTransactionsByDate = async (transactions, month, year) => {
+  try {
+    // Check whether transactions, month and year values are entered
+    if (!transactions || !month || !year) {
+      throw new Error(
+        "Transactions, month and year are required inputs for filtering transactions by date!"
+      );
+    }
+
+    const filteredTransactions = transactions.filter((transaction) => {
+      const transactionDate = new Date(transaction.transaction_date);
+      const targetDate = new Date(Date.UTC(year, month - 1)); // month is 0-indexed in JavaScript Date
+
+      // Compare year and month
+      return (
+        transactionDate.getUTCFullYear() === targetDate.getUTCFullYear() &&
+        transactionDate.getUTCMonth() === targetDate.getUTCMonth()
+      );
+    });
+
+    return filteredTransactions;
+  } catch (err) {
+    throw new Error(`Failed to filter transactions by date: ${err.message}`);
+  }
+};
+
 export {
   insertTransaction,
   updateTransaction,
@@ -161,4 +205,6 @@ export {
   retrieveAllTransactions,
   retrieveIncomeTransactions,
   retrieveExpenseTransactions,
+  retrieveTransactionsByCategoryId,
+  filterTransactionsByDate,
 };

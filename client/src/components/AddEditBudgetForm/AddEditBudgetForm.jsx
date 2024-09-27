@@ -7,7 +7,7 @@ const AddEditBudgetForm = ({ budget, user, onSuccess, onError, edit }) => {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
   const [plannedAmount, setPlannedAmount] = useState("");
-  const [actualAmount, setActualAmount] = useState("");
+  // const [actualAmount, setActualAmount] = useState("");
   // const [carryoverAmount, setCarryoverAmount] = useState("");
   // const [budgetAlertThreshold, setBudgetAlertThreshold] = useState("");
 
@@ -17,7 +17,7 @@ const AddEditBudgetForm = ({ budget, user, onSuccess, onError, edit }) => {
       setMonth(budget.month || "");
       setYear(budget.year || "");
       setPlannedAmount(budget.planned_amount || "");
-      setActualAmount(budget.actual_amount || "");
+      // setActualAmount(budget.actual_amount || "");
       // setCarryoverAmount(budget.carryover_amount || "");
       // setBudgetAlertThreshold(budget.budget_alert_threshold || "");
     }
@@ -35,7 +35,7 @@ const AddEditBudgetForm = ({ budget, user, onSuccess, onError, edit }) => {
         month,
         year,
         plannedAmount,
-        actualAmount,
+        actualAmount: edit ? budget.actual_amount : 100,
         carryoverAmount: 100,
         budgetAlertThreshold: 100,
       });
@@ -70,8 +70,8 @@ const AddEditBudgetForm = ({ budget, user, onSuccess, onError, edit }) => {
       setYear={setYear}
       plannedAmount={plannedAmount}
       setPlannedAmount={setPlannedAmount}
-      actualAmount={actualAmount}
-      setActualAmount={setActualAmount}
+      // actualAmount={actualAmount}
+      // setActualAmount={setActualAmount}
       // carryoverAmount={carryoverAmount}
       // setCarryoverAmount={setCarryoverAmount}
       // budgetAlertThreshold={budgetAlertThreshold}

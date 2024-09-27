@@ -11,8 +11,8 @@ const BudgetForm = ({
   setYear,
   plannedAmount,
   setPlannedAmount,
-  actualAmount,
-  setActualAmount,
+  // actualAmount,
+  // setActualAmount,
   // carryoverAmount,
   // setCarryoverAmount,
   // budgetAlertThreshold,
@@ -119,7 +119,7 @@ const BudgetForm = ({
           required
         />
       </div>
-      <div>
+      {/* <div>
         <label htmlFor="actualAmount">Actual Amount:</label>
         <input
           id="actualAmount"
@@ -130,7 +130,7 @@ const BudgetForm = ({
           step="0.01"
           required
         />
-      </div>
+      </div> */}
       {/* <div>
         <label htmlFor="carryoverAmount">Carryover Amount:</label>
         <input
