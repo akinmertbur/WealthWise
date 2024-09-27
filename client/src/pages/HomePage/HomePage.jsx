@@ -109,6 +109,8 @@ const HomePage = ({ user }) => {
         onDelete={null}
         editable={false}
       />
+      <h2>Statistical reports</h2>
+      <p className="report-msg">Check your statistics for last 6 months</p>
       <div className="summary-charts">
         <ExpensesPieChart userId={user.id} onError={handleError} />
         <ExpensesIncomesBarChart userId={user.id} onError={handleError} />

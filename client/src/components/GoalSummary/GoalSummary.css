@@ -8,7 +8,7 @@
 }
 
 .goal-sum {
-  margin-bottom: 30px;
+  margin-bottom: 60px;
 }
 
 .goal-head {
@@ -18,11 +18,11 @@
 }
 
 .goal-head h3 {
-  margin-left: 10px;
+  margin-left: 20px;
 }
 
 .goal-head p {
-  margin: 3px 15px 0 10px;
+  margin: 3px 25px 0 10px;
 }
 
 .goal-remaining {

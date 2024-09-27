@@ -8,8 +8,8 @@ const AddEditBudgetForm = ({ budget, user, onSuccess, onError, edit }) => {
   const [year, setYear] = useState("");
   const [plannedAmount, setPlannedAmount] = useState("");
   const [actualAmount, setActualAmount] = useState("");
-  const [carryoverAmount, setCarryoverAmount] = useState("");
-  const [budgetAlertThreshold, setBudgetAlertThreshold] = useState("");
+  // const [carryoverAmount, setCarryoverAmount] = useState("");
+  // const [budgetAlertThreshold, setBudgetAlertThreshold] = useState("");
 
   useEffect(() => {
     if (edit && budget) {
@@ -18,8 +18,8 @@ const AddEditBudgetForm = ({ budget, user, onSuccess, onError, edit }) => {
       setYear(budget.year || "");
       setPlannedAmount(budget.planned_amount || "");
       setActualAmount(budget.actual_amount || "");
-      setCarryoverAmount(budget.carryover_amount || "");
-      setBudgetAlertThreshold(budget.budget_alert_threshold || "");
+      // setCarryoverAmount(budget.carryover_amount || "");
+      // setBudgetAlertThreshold(budget.budget_alert_threshold || "");
     }
   }, [edit, budget]);
 
@@ -36,8 +36,8 @@ const AddEditBudgetForm = ({ budget, user, onSuccess, onError, edit }) => {
         year,
         plannedAmount,
         actualAmount,
-        carryoverAmount,
-        budgetAlertThreshold,
+        carryoverAmount: 100,
+        budgetAlertThreshold: 100,
       });
 
       const response = await fetch(url, {
@@ -72,10 +72,10 @@ const AddEditBudgetForm = ({ budget, user, onSuccess, onError, edit }) => {
       setPlannedAmount={setPlannedAmount}
       actualAmount={actualAmount}
       setActualAmount={setActualAmount}
-      carryoverAmount={carryoverAmount}
-      setCarryoverAmount={setCarryoverAmount}
-      budgetAlertThreshold={budgetAlertThreshold}
-      setBudgetAlertThreshold={setBudgetAlertThreshold}
+      // carryoverAmount={carryoverAmount}
+      // setCarryoverAmount={setCarryoverAmount}
+      // budgetAlertThreshold={budgetAlertThreshold}
+      // setBudgetAlertThreshold={setBudgetAlertThreshold}
       edit={edit}
       handleSubmit={handleSubmit}
       onError={onError}

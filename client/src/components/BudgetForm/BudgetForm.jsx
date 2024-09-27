@@ -13,10 +13,10 @@ const BudgetForm = ({
   setPlannedAmount,
   actualAmount,
   setActualAmount,
-  carryoverAmount,
-  setCarryoverAmount,
-  budgetAlertThreshold,
-  setBudgetAlertThreshold,
+  // carryoverAmount,
+  // setCarryoverAmount,
+  // budgetAlertThreshold,
+  // setBudgetAlertThreshold,
   edit,
   handleSubmit,
   onError,
@@ -70,23 +70,42 @@ const BudgetForm = ({
       </div>
       <div>
         <label htmlFor="month">Month:</label>
-        <input
+        <select
           id="month"
-          type="number"
           value={month}
           onChange={(e) => setMonth(e.target.value)}
           required
-        />
+        >
+          <option value="">Select Month</option>
+          <option value="1">January</option>
+          <option value="2">February</option>
+          <option value="3">March</option>
+          <option value="4">April</option>
+          <option value="5">May</option>
+          <option value="6">June</option>
+          <option value="7">July</option>
+          <option value="8">August</option>
+          <option value="9">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
+        </select>
       </div>
       <div>
         <label htmlFor="year">Year:</label>
-        <input
+        <select
           id="year"
-          type="number"
           value={year}
           onChange={(e) => setYear(e.target.value)}
           required
-        />
+        >
+          <option value="">Select Year</option>
+          {Array.from({ length: 50 }, (_, i) => (
+            <option key={i} value={2020 + i}>
+              {2020 + i}
+            </option>
+          ))}
+        </select>
       </div>
       <div>
         <label htmlFor="plannedAmount">Planned Amount:</label>
@@ -112,7 +131,7 @@ const BudgetForm = ({
           required
         />
       </div>
-      <div>
+      {/* <div>
         <label htmlFor="carryoverAmount">Carryover Amount:</label>
         <input
           id="carryoverAmount"
@@ -135,7 +154,7 @@ const BudgetForm = ({
           step="0.01"
           required
         />
-      </div>
+      </div> */}
       <button type="submit">{edit ? "Edit" : "Add"}</button>
     </form>
   );
