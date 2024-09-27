@@ -4,6 +4,7 @@ import Modal from "../../components/Modal/Modal";
 import AddEditBudgetForm from "../../components/AddEditBudgetForm/AddEditBudgetForm";
 import Budgets from "../../components/Budgets/Budgets";
 import "./BudgetPage.css";
+import BudgetDate from "../../components/BudgetDate/BudgetDate";
 
 function BudgetPage({ user }) {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -12,6 +13,8 @@ function BudgetPage({ user }) {
   const [budget, setBudget] = useState(null);
   const [addEdit, setAddEdit] = useState(false);
   const [refetchBudgets, setRefetchBudgets] = useState(false);
+  const [date, setDate] = useState({ month: "", year: "" });
+  const today = new Date();
 
   // Success handler
   const handleSuccess = (message) => {
@@ -104,14 +107,17 @@ function BudgetPage({ user }) {
         Add Budget
       </button>
 
+      <BudgetDate date={date} setDate={setDate} />
+
       <Budgets
-        month={10}
-        year={2024}
+        month={date.month ? date.month : today.getMonth() + 1}
+        year={date.year ? date.year : today.getFullYear()}
         user={user}
         onError={handleError}
         refetchBudgets={refetchBudgets}
         onEdit={handleEdit}
         onDelete={handleDelete}
+        editable={true}
       />
 
       {/* Modal for adding/editing budget

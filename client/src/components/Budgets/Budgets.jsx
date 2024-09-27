@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import BudgetProgress from "../../components/BudgetProgress/BudgetProgress";
 import BudgetHeading from "../../components/BudgetHeading/BudgetHeading";
+import "./Budgets.css";
 
 function Budgets({
   month,
@@ -11,6 +12,7 @@ function Budgets({
   refetchBudgets,
   onEdit,
   onDelete,
+  editable,
 }) {
   const userId = user.id;
   const [budgets, setBudgets] = useState([]);
@@ -43,10 +45,16 @@ function Budgets({
     if (userId) {
       fetchBudgetsByPeriod();
     }
-  }, [userId, refetchBudgets]);
+  }, [userId, month, year, refetchBudgets]);
 
   return (
     <>
+      {!editable && (
+        <>
+          <h2 className="budget-head-msg">Planned Budgets</h2>
+          <p className="budget-msg">Check your planned budgets</p>
+        </>
+      )}
       {/* Display the budgets with progress bar*/}
       {budgets.length > 0 ? (
         budgets.map((budget) => (
@@ -58,6 +66,7 @@ function Budgets({
               onError={onError}
               onEdit={onEdit}
               onDelete={onDelete}
+              editable={editable}
             />
             <div className="budget-detail">
               <BudgetProgress

@@ -11,6 +11,7 @@ function BudgetHeading({
   onError,
   onEdit,
   onDelete,
+  editable,
 }) {
   const [category, setCategory] = useState("");
 
@@ -51,10 +52,12 @@ function BudgetHeading({
 
   return (
     <div className="budget-heading">
-      <div className="budget-buttons">
-        <EditBudgetButton budgetId={budgetId} onEdit={onEdit} />
-        <DeleteBudgetButton budgetId={budgetId} onDelete={onDelete} />
-      </div>
+      {editable && (
+        <div className="budget-buttons">
+          <EditBudgetButton budgetId={budgetId} onEdit={onEdit} />
+          <DeleteBudgetButton budgetId={budgetId} onDelete={onDelete} />
+        </div>
+      )}
       <div className="budget-title">
         <h3>{category.name}</h3>
         <p>{budgetPeriod}</p>

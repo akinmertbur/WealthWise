@@ -5,6 +5,7 @@ import TransactionList from "../../components/TransactionList/TransactionList";
 import GoalSummary from "../../components/GoalSummary/GoalSummary";
 import ExpensesPieChart from "../../components/ExpensesPieChart/ExpensesPieChart";
 import ExpensesIncomesBarChart from "../../components/ExpensesIncomesBarChart/ExpensesIncomesBarChart";
+import Budgets from "../../components/Budgets/Budgets";
 import "./HomePage.css";
 
 const HomePage = ({ user }) => {
@@ -15,6 +16,7 @@ const HomePage = ({ user }) => {
   const [successMessage, setSuccessMessage] = useState(null);
   const navigate = useNavigate();
   const location = useLocation(); // Use useLocation to get the state passed from the login page
+  const today = new Date();
 
   useEffect(() => {
     // Fetch income, expenses, and savings data from an API or perform calculations
@@ -96,6 +98,16 @@ const HomePage = ({ user }) => {
         userId={user.id}
         onSuccess={handleSuccess}
         onError={handleError}
+      />
+      <Budgets
+        month={today.getMonth() + 1}
+        year={today.getFullYear()}
+        user={user}
+        onError={handleError}
+        refetchBudgets={null}
+        onEdit={null}
+        onDelete={null}
+        editable={false}
       />
       <div className="summary-charts">
         <ExpensesPieChart userId={user.id} onError={handleError} />
