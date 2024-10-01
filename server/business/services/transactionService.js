@@ -9,6 +9,10 @@ import {
   getExpenseTransactions,
   getTransactionsByCategoryId,
 } from "../../data/repositories/transactionRepository.js";
+import {
+  updateActualAmount,
+  retrieveBudgetByCategoryId,
+} from "./budgetService.js";
 
 const insertTransaction = async (
   userId,
@@ -34,6 +38,8 @@ const insertTransaction = async (
         "There are missing transaction values! Enter all the input values!"
       );
     }
+
+    await computeActualAmount(categoryId, transactionDate, amount, null);
 
     return await addTransaction({
       user_id: userId,
@@ -75,6 +81,13 @@ const updateTransaction = async (
         "There are missing transaction values! Enter all the input values!"
       );
     }
+
+    await computeActualAmount(
+      categoryId,
+      transactionDate,
+      amount,
+      transactionId
+    );
 
     return await editTransaction({
       transaction_id: transactionId,
@@ -194,6 +207,47 @@ const filterTransactionsByDate = async (transactions, month, year) => {
     return filteredTransactions;
   } catch (err) {
     throw new Error(`Failed to filter transactions by date: ${err.message}`);
+  }
+};
+
+// Helper function to extract month and year from a date
+const getMonthAndYear = (date) => {
+  const month = date.getMonth() + 1; // Months are zero-based, so add 1
+  const year = date.getFullYear();
+  return { month, year };
+};
+
+// Helper function to compute the actual amount
+const computeActualAmount = async (
+  categoryId,
+  transactionDate,
+  amount,
+  transactionId
+) => {
+  try {
+    // Create a new Date object
+    const date = new Date(transactionDate);
+    // Extract the month and year
+    const { month, year } = getMonthAndYear(date);
+
+    // Retrieve the budget
+    const budget = await retrieveBudgetByCategoryId(categoryId, month, year);
+
+    // If the budget exists, actual amount is updated with the new amount
+    if (budget) {
+      // If the transaction will be updated,
+      // calculate the net amount before performing the operation
+      if (transactionId) {
+        const transaction = await retrieveTransactionDetail(transactionId);
+        const previousAmount = transaction.amount;
+        amount -= previousAmount;
+      }
+
+      const newAmount = Number(budget.actual_amount) + Number(amount);
+      await updateActualAmount(budget.budget_id, newAmount);
+    }
+  } catch (err) {
+    throw new Error(`Error computing actual amount: ${err.message}`);
   }
 };
 

@@ -36,6 +36,16 @@ const getAllBudgetsByPeriod = async (user_id, month, year) => {
   });
 };
 
+const editActualAmount = async (budget_id, actual_amount) => {
+  return await Budget.update({ actual_amount }, { where: { budget_id } });
+};
+
+const getBudgetByCategoryId = async (category_id, month, year) => {
+  return await Budget.findOne({
+    where: { category_id, month, year },
+  });
+};
+
 export {
   addBudget,
   editBudget,
@@ -43,4 +53,6 @@ export {
   getBudgetDetail,
   getAllBudgets,
   getAllBudgetsByPeriod,
+  editActualAmount,
+  getBudgetByCategoryId,
 };

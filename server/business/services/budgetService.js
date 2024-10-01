@@ -6,6 +6,8 @@ import {
   getBudgetDetail,
   getAllBudgets,
   getAllBudgetsByPeriod,
+  editActualAmount,
+  getBudgetByCategoryId,
 } from "../../data/repositories/budgetRepository.js";
 import {
   retrieveTransactionsByCategoryId,
@@ -189,6 +191,34 @@ const computeActualAmount = async (userId, categoryId, month, year) => {
   }
 };
 
+const updateActualAmount = async (budgetId, actualAmount) => {
+  try {
+    if (!budgetId || !actualAmount) {
+      throw new Error(
+        "Budget Id and Actual Amount are required for updating the actual amount!"
+      );
+    }
+
+    return await editActualAmount(budgetId, actualAmount);
+  } catch (err) {
+    throw new Error(`Failed to update the actual amount: ${err.message}`);
+  }
+};
+
+const retrieveBudgetByCategoryId = async (categoryId, month, year) => {
+  try {
+    if (!categoryId || !month || !year) {
+      throw new Error(
+        "Category Id, Month and Year are required for retrieving the budget!"
+      );
+    }
+
+    return await getBudgetByCategoryId(categoryId, month, year);
+  } catch (err) {
+    throw new Error(`Failed to retrieve the budget: ${err.message}`);
+  }
+};
+
 export {
   insertBudget,
   updateBudget,
@@ -197,4 +227,6 @@ export {
   retrieveAllBudgets,
   retrieveAllBudgetsByPeriod,
   computeActualAmount,
+  updateActualAmount,
+  retrieveBudgetByCategoryId,
 };
