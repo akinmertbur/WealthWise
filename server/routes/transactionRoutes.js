@@ -6,6 +6,7 @@ import {
   deleteTransaction,
   getTransactionDetail,
   getAllTransactions,
+  getAllTransactionsByPeriod,
 } from "../controllers/transactionController.js";
 import {
   validateAddTransaction,
@@ -13,6 +14,7 @@ import {
   validateDeleteTransaction,
   validateGetTransactionDetail,
   validateGetAllTransactions,
+  validateGetAllTransactionsByPeriod,
 } from "../middlewares/validationMiddleware.js";
 
 const router = express.Router();
@@ -26,5 +28,10 @@ router.post(
   getTransactionDetail
 ); // Get transaction based on the transaction ID
 router.post("/getAll", validateGetAllTransactions, getAllTransactions); // Get all transactions based on the user ID
+router.post(
+  "/getAllByPeriod",
+  validateGetAllTransactionsByPeriod,
+  getAllTransactionsByPeriod
+); // Get all transactions based on the user ID, month and year
 
 export default router;

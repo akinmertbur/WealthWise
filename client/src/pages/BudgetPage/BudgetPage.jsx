@@ -4,7 +4,7 @@ import Modal from "../../components/Modal/Modal";
 import AddEditBudgetForm from "../../components/AddEditBudgetForm/AddEditBudgetForm";
 import Budgets from "../../components/Budgets/Budgets";
 import "./BudgetPage.css";
-import BudgetDate from "../../components/BudgetDate/BudgetDate";
+import DateForm from "../../components/DateForm/DateForm";
 
 function BudgetPage({ user }) {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -107,7 +107,7 @@ function BudgetPage({ user }) {
         Add Budget
       </button>
 
-      <BudgetDate date={date} setDate={setDate} />
+      <DateForm date={date} setDate={setDate} />
 
       <Budgets
         month={date.month ? date.month : today.getMonth() + 1}

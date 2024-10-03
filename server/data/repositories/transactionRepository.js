@@ -1,4 +1,5 @@
 // server/data/repositories/transactionRepository.js
+import { Op, literal } from "sequelize";
 import Transaction from "../models/transactionModel.js";
 
 const addTransaction = async (transactionData) => {
@@ -49,6 +50,19 @@ const getTransactionsByCategoryId = async (user_id, category_id) => {
   });
 };
 
+const getAllTransactionsByPeriod = async (user_id, month, year) => {
+  return await Transaction.findAll({
+    where: {
+      user_id,
+      [Op.and]: [
+        literal(`EXTRACT(MONTH FROM "transaction_date") = ${month}`),
+        literal(`EXTRACT(YEAR FROM "transaction_date") = ${year}`),
+      ],
+    },
+    order: [["transaction_date", "DESC"]],
+  });
+};
+
 export {
   addTransaction,
   editTransaction,
@@ -58,4 +72,5 @@ export {
   getIncomeTransactions,
   getExpenseTransactions,
   getTransactionsByCategoryId,
+  getAllTransactionsByPeriod,
 };

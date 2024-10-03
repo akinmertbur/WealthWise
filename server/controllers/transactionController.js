@@ -5,6 +5,7 @@ import {
   removeTransaction,
   retrieveTransactionDetail,
   retrieveAllTransactions,
+  retrieveAllTransactionsByPeriod,
 } from "../business/services/transactionService.js";
 import { log, error } from "../utils/logger.js";
 
@@ -112,10 +113,25 @@ const getAllTransactions = async (req, res) => {
   }
 };
 
+const getAllTransactionsByPeriod = async (req, res) => {
+  try {
+    const { userId, month, year } = req.body;
+
+    const result = await retrieveAllTransactionsByPeriod(userId, month, year);
+
+    log(`All transactions by period retrieved successfully!`);
+    res.status(200).json({ result });
+  } catch (err) {
+    error(`Failed to retrieve all transactions by period: ${err.message}`);
+    res.status(500).json({ message: err.message });
+  }
+};
+
 export {
   addTransaction,
   editTransaction,
   deleteTransaction,
   getTransactionDetail,
   getAllTransactions,
+  getAllTransactionsByPeriod,
 };

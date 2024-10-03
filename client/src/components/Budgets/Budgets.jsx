@@ -40,7 +40,7 @@ function Budgets({
     }
   };
 
-  // Fetch budgets when the component mounts or when userId and refetchBudgets change
+  // Fetch budgets when the component mounts or when userId, month, year and refetchBudgets change
   useEffect(() => {
     if (userId) {
       fetchBudgetsByPeriod();

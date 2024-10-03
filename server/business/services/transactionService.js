@@ -8,6 +8,7 @@ import {
   getIncomeTransactions,
   getExpenseTransactions,
   getTransactionsByCategoryId,
+  getAllTransactionsByPeriod,
 } from "../../data/repositories/transactionRepository.js";
 import {
   updateActualAmount,
@@ -210,6 +211,23 @@ const filterTransactionsByDate = async (transactions, month, year) => {
   }
 };
 
+const retrieveAllTransactionsByPeriod = async (userId, month, year) => {
+  try {
+    // Check whether userId, month an year are entered
+    if (!userId || !month || !year) {
+      throw new Error(
+        "User Id, month and year are required inputs for getting all transactions by period!"
+      );
+    }
+
+    return await getAllTransactionsByPeriod(userId, month, year);
+  } catch (err) {
+    throw new Error(
+      `Failed to retrieve all transactions by period: ${err.message}`
+    );
+  }
+};
+
 // Helper function to extract month and year from a date
 const getMonthAndYear = (date) => {
   const month = date.getMonth() + 1; // Months are zero-based, so add 1
@@ -261,4 +279,5 @@ export {
   retrieveExpenseTransactions,
   retrieveTransactionsByCategoryId,
   filterTransactionsByDate,
+  retrieveAllTransactionsByPeriod,
 };

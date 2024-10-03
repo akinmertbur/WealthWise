@@ -322,3 +322,16 @@ export const validateGetCategoryDetail = [
     next();
   },
 ];
+
+export const validateGetAllTransactionsByPeriod = [
+  check("userId").notEmpty().withMessage("User Id is required!"),
+  check("month").notEmpty().withMessage("Month cannot be empty!"),
+  check("year").notEmpty().withMessage("Year cannot be empty!"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];

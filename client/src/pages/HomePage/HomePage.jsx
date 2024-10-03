@@ -93,7 +93,13 @@ const HomePage = ({ user }) => {
       <h2 className="welcome">Hello, {user.username}!</h2>
       <SummaryCard income={income} expenses={expenses} savings={savings} />
       {/* Pass the userId to the TransactionList component */}
-      <TransactionList userId={user.id} edit={false} onError={handleError} />
+      <TransactionList
+        userId={user.id}
+        edit={false}
+        onError={handleError}
+        month={today.getMonth() + 1}
+        year={today.getFullYear()}
+      />
       <GoalSummary
         userId={user.id}
         onSuccess={handleSuccess}

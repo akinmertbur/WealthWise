@@ -1,8 +1,8 @@
-// src/components/BudgetDate/BudgetDate.jsx
+// src/components/DateForm/DateForm.jsx
 import React from "react";
-import "./BudgetDate.css";
+import "./DateForm.css";
 
-const BudgetDate = ({ date, setDate }) => {
+const DateForm = ({ date, setDate }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setDate((prevDate) => ({
@@ -31,7 +31,7 @@ const BudgetDate = ({ date, setDate }) => {
   );
 
   return (
-    <div className="budget-date">
+    <div className="date">
       <label>
         Month:
         <select name="month" value={date.month} onChange={handleChange}>
@@ -58,4 +58,4 @@ const BudgetDate = ({ date, setDate }) => {
   );
 };
 
-export default BudgetDate;
+export default DateForm;

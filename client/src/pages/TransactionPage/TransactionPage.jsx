@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AddEditTransactionForm from "../../components/AddEditTransactionForm/AddEditTransactionForm";
 import Modal from "../../components/Modal/Modal";
 import TransactionList from "../../components/TransactionList/TransactionList";
+import DateForm from "../../components/DateForm/DateForm";
 import "./TransactionPage.css";
 
 const TransactionPage = ({ user }) => {
@@ -11,6 +12,8 @@ const TransactionPage = ({ user }) => {
   const [transaction, setTransaction] = useState(null);
   const [updateList, setUpdateList] = useState(false);
   const [addEdit, setAddEdit] = useState(false);
+  const [date, setDate] = useState({ month: "", year: "" });
+  const today = new Date();
 
   const handleSuccess = (message) => {
     setSuccessMessage(message);
@@ -73,6 +76,8 @@ const TransactionPage = ({ user }) => {
         Add Transaction
       </button>
 
+      <DateForm date={date} setDate={setDate} />
+
       <TransactionList
         className="transaction-list"
         userId={user.id}
@@ -80,6 +85,8 @@ const TransactionPage = ({ user }) => {
         edit={true}
         onEdit={handleEdit}
         onError={handleError}
+        month={date.month ? date.month : today.getMonth() + 1}
+        year={date.year ? date.year : today.getFullYear()}
       />
 
       {/* Modal for adding/editing transaction

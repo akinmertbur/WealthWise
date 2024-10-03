@@ -1,19 +1,27 @@
 import React, { useState, useEffect } from "react";
 import "./TransactionList.css";
 
-const TransactionList = ({ userId, updateList, edit, onEdit, onError }) => {
+const TransactionList = ({
+  userId,
+  updateList,
+  edit,
+  onEdit,
+  onError,
+  month,
+  year,
+}) => {
   const [transactions, setTransactions] = useState([]);
 
   // Fetch transactions when the component mounts
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await fetch("/api/transaction/getAll", {
+        const response = await fetch("/api/transaction/getAllByPeriod", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ userId }), // Sending the userId in the request body
+          body: JSON.stringify({ userId, month, year }), // Sending the userId, month and year in the request body
         });
 
         const data = await response.json();
@@ -31,7 +39,7 @@ const TransactionList = ({ userId, updateList, edit, onEdit, onError }) => {
     if (userId) {
       fetchTransactions(); // Only fetch if userId exists
     }
-  }, [userId, updateList]); // Re-fetch when userId or updateList change
+  }, [userId, updateList, month, year]); // Re-fetch when userId, updateList, month and year change
 
   const handleDelete = async (transactionId) => {
     try {
