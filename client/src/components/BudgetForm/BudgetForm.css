@@ -46,6 +46,7 @@ button:hover {
 input[type="radio"] {
   width: auto;
   margin-right: 5px;
+  margin-bottom: 5px;
 }
 
 form div > div {
