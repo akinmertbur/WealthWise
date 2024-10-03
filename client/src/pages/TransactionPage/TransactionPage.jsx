@@ -79,7 +79,6 @@ const TransactionPage = ({ user }) => {
       <DateForm date={date} setDate={setDate} />
 
       <TransactionList
-        className="transaction-list"
         userId={user.id}
         updateList={updateList}
         edit={true}

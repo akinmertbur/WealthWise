@@ -95,7 +95,9 @@ const HomePage = ({ user }) => {
       {/* Pass the userId to the TransactionList component */}
       <TransactionList
         userId={user.id}
+        updateList={null}
         edit={false}
+        onEdit={null}
         onError={handleError}
         month={today.getMonth() + 1}
         year={today.getFullYear()}

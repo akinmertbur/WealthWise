@@ -56,3 +56,7 @@ h2 {
   margin-top: 0px;
   margin-right: 10px;
 }
+
+.transaction-list {
+  width: 1000px;
+}
