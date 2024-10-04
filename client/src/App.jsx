@@ -8,6 +8,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import TransactionPage from "./pages/TransactionPage/TransactionPage";
 import GoalsPage from "./pages/GoalsPage/GoalsPage";
 import BudgetPage from "./pages/BudgetPage/BudgetPage";
+import ReportPage from "./pages/ReportPage/ReportPage";
 
 function App() {
   return (
@@ -60,6 +61,14 @@ function App() {
           element={
             <ProtectedRoute>
               <BudgetPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/report"
+          element={
+            <ProtectedRoute>
+              <ReportPage />
             </ProtectedRoute>
           }
         />

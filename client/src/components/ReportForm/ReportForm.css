@@ -1,0 +1,83 @@
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form > div {
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+input,
+select,
+button {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+input:focus,
+select:focus {
+  border-color: #646cff;
+  outline: none;
+}
+
+button {
+  background-color: #646cff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #535bf2;
+}
+
+input[type="radio"] {
+  width: auto;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+form div > div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+form div > div label {
+  margin-left: 5px;
+}
+
+form > div:last-child {
+  margin-bottom: 0;
+}
+
+/* Media Queries for Mobile Devices */
+@media (max-width: 768px) {
+  input,
+  select,
+  button {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  input,
+  select,
+  button {
+    padding: 6px;
+    font-size: 0.85rem;
+  }
+}

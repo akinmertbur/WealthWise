@@ -6,15 +6,38 @@ import {
   getReportDetail,
   getAllReports,
 } from "../../data/repositories/reportRepository.js";
+import { retrieveAllTransactionsByPeriod } from "./transactionService.js";
 
-const insertReport = async (userId, reportType, reportData) => {
+const insertReport = async (userId, reportType, month, year) => {
   try {
     // Check whether all the input values are entered
-    if (!userId || !reportType || !reportData) {
+    if (!userId || !reportType || !month || !year) {
       throw new Error(
         "There are missing report values! Enter all the input values!"
       );
     }
+
+    const transactions = await retrieveAllTransactionsByPeriod(
+      userId,
+      month,
+      year
+    );
+
+    let totalIncome = 0;
+    let totalExpense = 0;
+
+    if (transactions) {
+      transactions.forEach((transaction) => {
+        if (transaction.transaction_type === "income") {
+          totalIncome += Number(transaction.amount);
+        } else {
+          totalExpense += Number(transaction.amount);
+        }
+      });
+    }
+
+    const reportObject = { expense: totalExpense, income: totalIncome };
+    const reportData = JSON.stringify(reportObject);
 
     return await addReport({
       user_id: userId,
