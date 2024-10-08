@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import ReportForm from "../ReportForm/ReportForm";
 
 const AddReportForm = ({ user, onSuccess, onError }) => {
+  const [report, setReport] = useState("");
   const [reportType, setReportType] = useState("");
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
@@ -14,6 +15,7 @@ const AddReportForm = ({ user, onSuccess, onError }) => {
       const method = "POST";
       const body = JSON.stringify({
         userId: user.id,
+        report,
         reportType,
         month,
         year,
@@ -41,6 +43,8 @@ const AddReportForm = ({ user, onSuccess, onError }) => {
 
   return (
     <ReportForm
+      report={report}
+      setReport={setReport}
       reportType={reportType}
       setReportType={setReportType}
       month={month}

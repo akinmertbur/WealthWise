@@ -3,6 +3,8 @@ import React from "react";
 import "./ReportForm.css";
 
 const ReportForm = ({
+  report,
+  setReport,
   reportType,
   setReportType,
   month,
@@ -13,6 +15,33 @@ const ReportForm = ({
 }) => {
   return (
     <form onSubmit={handleSubmit}>
+      <div>
+        <label>Report Type:</label>
+        <div>
+          <input
+            type="radio"
+            id="report1"
+            name="report"
+            value="1"
+            checked={report === "1"}
+            onChange={(e) => setReport(e.target.value)}
+            required
+          />
+          <label htmlFor="report1">Compare Expenses & Incomes</label>
+        </div>
+        <div>
+          <input
+            type="radio"
+            id="report2"
+            name="report"
+            value="2"
+            checked={report === "2"}
+            onChange={(e) => setReport(e.target.value)}
+            required
+          />
+          <label htmlFor="report2">Categorical Expenses Report</label>
+        </div>
+      </div>
       <div>
         <label>Report Type:</label>
         <div>

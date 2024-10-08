@@ -10,9 +10,9 @@ import { log, error } from "../utils/logger.js";
 
 const addReport = async (req, res) => {
   try {
-    const { userId, reportType, month, year } = req.body;
+    const { userId, report, reportType, month, year } = req.body;
 
-    const result = await insertReport(userId, reportType, month, year);
+    const result = await insertReport(userId, report, reportType, month, year);
     log(`Report added successfully!`);
     res.status(200).json({ message: `Report added successfully!` });
   } catch (err) {

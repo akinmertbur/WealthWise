@@ -7,8 +7,9 @@ import {
   getAllReports,
 } from "../../data/repositories/reportRepository.js";
 import { retrieveAllTransactionsByPeriod } from "./transactionService.js";
+import { getAllCategories } from "./categoryService.js";
 
-const insertReport = async (userId, reportType, month, year) => {
+const insertReport = async (userId, report, reportType, month, year) => {
   try {
     // Check whether all the input values are entered
     if (!userId || !reportType || !month || !year) {
@@ -23,20 +24,41 @@ const insertReport = async (userId, reportType, month, year) => {
       year
     );
 
-    let totalIncome = 0;
-    let totalExpense = 0;
+    let reportObject;
 
-    if (transactions) {
-      transactions.forEach((transaction) => {
-        if (transaction.transaction_type === "income") {
-          totalIncome += Number(transaction.amount);
-        } else {
-          totalExpense += Number(transaction.amount);
+    // report = '1' stands for the compare expenses & incomes report
+    // report = '2' stands for the categorical expenses report
+
+    if (report === "1") {
+      let totalIncome = 0;
+      let totalExpense = 0;
+
+      if (transactions) {
+        transactions.forEach((transaction) => {
+          if (transaction.transaction_type === "income") {
+            totalIncome += Number(transaction.amount);
+          } else {
+            totalExpense += Number(transaction.amount);
+          }
+        });
+      }
+
+      reportObject = { expense: totalExpense, income: totalIncome };
+    } else if (report === "2") {
+      const categories = await getAllCategories();
+
+      reportObject = transactions.reduce((acc, transaction) => {
+        const category = categories.find(
+          (cat) => cat.category_id === transaction.category_id
+        );
+        if (category) {
+          acc[category.name] = (acc[category.name] || 0) + 1;
         }
-      });
+
+        return acc; // Ensure the accumulator is always returned
+      }, {});
     }
 
-    const reportObject = { expense: totalExpense, income: totalIncome };
     const reportData = JSON.stringify(reportObject);
 
     return await addReport({

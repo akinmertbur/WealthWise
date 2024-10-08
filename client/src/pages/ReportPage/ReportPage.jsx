@@ -3,25 +3,7 @@ import React, { useState, useEffect } from "react";
 import Modal from "../../components/Modal/Modal";
 import AddReportForm from "../../components/AddReportForm/AddReportForm";
 import "./ReportPage.css";
-import { Bar } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+import ReportVisual from "../../components/ReportVisual/ReportVisual";
 
 function ReportPage({ user }) {
   const userId = user.id;
@@ -71,44 +53,14 @@ function ReportPage({ user }) {
     if (showModal) {
       setShowModal(false); // Close the modal on success
     }
+
+    fetchReports(); // Re-fetch reports immediately after success
   };
 
   // Error handler
   const handleError = (message) => {
     setErrorMessage(message);
     setSuccessMessage(null);
-  };
-
-  const data = {
-    labels: ["Incomes", "Expenses"],
-    datasets: [
-      {
-        label: "Quantity",
-        data:
-          reports.length > 0
-            ? [
-                Number(JSON.parse(reports[1].report_data).income),
-                Number(JSON.parse(reports[1].report_data).expense),
-              ]
-            : [0, 0],
-        backgroundColor: "rgba(75, 192, 192, 0.2)",
-        borderColor: "rgba(75, 192, 192, 1)",
-        borderWidth: 1,
-      },
-    ],
-  };
-
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: true,
-        text: "Incomes / Expenses",
-      },
-    },
   };
 
   return (
@@ -134,21 +86,9 @@ function ReportPage({ user }) {
         />
       </Modal>
 
-      {loading ? (
-        <p>Loading...</p> // Display a loading message while fetching reports
-      ) : (
-        <div className="bar-chart">
-          <Bar data={data} options={options} />
-        </div>
+      {reports.length > 0 && (
+        <ReportVisual report={reports[3]} loading={loading} />
       )}
-
-      {/* <ul>
-        {reports.map((report) => (
-          <li key={report.report_id}>
-            {JSON.parse(report.report_data).expense}
-          </li>
-        ))}
-      </ul> */}
     </div>
   );
 }
