@@ -5,12 +5,6 @@ const addReport = async (reportData) => {
   return await Report.create(reportData);
 };
 
-const editReport = async (reportData) => {
-  return await Report.update(reportData, {
-    where: { report_id: reportData.report_id },
-  });
-};
-
 const deleteReport = async (report_id) => {
   const row = await Report.findOne({ where: { report_id } });
 
@@ -29,4 +23,4 @@ const getAllReports = async (user_id) => {
   });
 };
 
-export { addReport, editReport, deleteReport, getReportDetail, getAllReports };
+export { addReport, deleteReport, getReportDetail, getAllReports };

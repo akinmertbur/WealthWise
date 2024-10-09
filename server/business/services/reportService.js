@@ -1,66 +1,36 @@
 // server/business/services/reportService.js
 import {
   addReport,
-  editReport,
   deleteReport,
   getReportDetail,
   getAllReports,
 } from "../../data/repositories/reportRepository.js";
-import { retrieveAllTransactionsByPeriod } from "./transactionService.js";
+import {
+  retrieveAllTransactionsByPeriod,
+  retrieveAllTransactionsByYear,
+} from "./transactionService.js";
 import { getAllCategories } from "./categoryService.js";
 
 const insertReport = async (userId, report, reportType, month, year) => {
   try {
-    // Check whether all the input values are entered
-    if (!userId || !reportType || !month || !year) {
-      throw new Error(
-        "There are missing report values! Enter all the input values!"
-      );
-    }
+    // Validate input values
+    validateReportInput(userId, reportType, month, year);
 
-    const transactions = await retrieveAllTransactionsByPeriod(
+    // Retrieve transactions based on report type
+    const transactions = await getTransactionsByReportType(
       userId,
+      reportType,
       month,
       year
     );
 
-    let reportObject;
+    // Generate report object based on the report type
+    const reportObject = await generateReportObject(report, transactions);
 
-    // report = '1' stands for the compare expenses & incomes report
-    // report = '2' stands for the categorical expenses report
-
-    if (report === "1") {
-      let totalIncome = 0;
-      let totalExpense = 0;
-
-      if (transactions) {
-        transactions.forEach((transaction) => {
-          if (transaction.transaction_type === "income") {
-            totalIncome += Number(transaction.amount);
-          } else {
-            totalExpense += Number(transaction.amount);
-          }
-        });
-      }
-
-      reportObject = { expense: totalExpense, income: totalIncome };
-    } else if (report === "2") {
-      const categories = await getAllCategories();
-
-      reportObject = transactions.reduce((acc, transaction) => {
-        const category = categories.find(
-          (cat) => cat.category_id === transaction.category_id
-        );
-        if (category) {
-          acc[category.name] = (acc[category.name] || 0) + 1;
-        }
-
-        return acc; // Ensure the accumulator is always returned
-      }, {});
-    }
-
+    // Convert report object to JSON format
     const reportData = JSON.stringify(reportObject);
 
+    // Add report to database
     return await addReport({
       user_id: userId,
       report_type: reportType,
@@ -68,26 +38,6 @@ const insertReport = async (userId, report, reportType, month, year) => {
     });
   } catch (err) {
     throw new Error(`Failed to add report: ${err.message}`);
-  }
-};
-
-const updateReport = async (reportId, userId, reportType, reportData) => {
-  try {
-    // Check whether all the input values are entered
-    if (!reportId || !userId || !reportType || !reportData) {
-      throw new Error(
-        "There are missing report values! Enter all the input values!"
-      );
-    }
-
-    return await editReport({
-      report_id: reportId,
-      user_id: userId,
-      report_type: reportType,
-      report_data: reportData,
-    });
-  } catch (err) {
-    throw new Error(`Failed to update report: ${err.message}`);
   }
 };
 
@@ -130,10 +80,68 @@ const retrieveAllReports = async (userId) => {
   }
 };
 
-export {
-  insertReport,
-  updateReport,
-  removeReport,
-  retrieveReportDetail,
-  retrieveAllReports,
+// Helper function to validate report input values
+const validateReportInput = (userId, reportType, month, year) => {
+  if (!userId || !reportType || !month || !year) {
+    throw new Error(
+      "There are missing report values! Enter all the input values!"
+    );
+  }
 };
+
+// Helper function to retrieve transactions based on the report type
+const getTransactionsByReportType = async (userId, reportType, month, year) => {
+  if (reportType === "monthly") {
+    return await retrieveAllTransactionsByPeriod(userId, month, year);
+  } else {
+    return await retrieveAllTransactionsByYear(userId, year);
+  }
+};
+
+// Helper function to generate income and expense report
+const generateIncomeExpenseReport = (transactions) => {
+  let totalIncome = 0;
+  let totalExpense = 0;
+
+  if (transactions) {
+    transactions.forEach((transaction) => {
+      if (transaction.transaction_type === "income") {
+        totalIncome += Number(transaction.amount);
+      } else {
+        totalExpense += Number(transaction.amount);
+      }
+    });
+  }
+
+  return { expense: totalExpense, income: totalIncome };
+};
+
+// Helper function to generate categorical expense report
+const generateCategoricalExpenseReport = async (transactions) => {
+  const categories = await getAllCategories();
+
+  return transactions.reduce((acc, transaction) => {
+    const category = categories.find(
+      (cat) => cat.category_id === transaction.category_id
+    );
+    if (category) {
+      acc[category.name] = (acc[category.name] || 0) + 1;
+    }
+
+    return acc;
+  }, {});
+};
+
+// Helper function to generate the report object based on report type
+const generateReportObject = async (report, transactions) => {
+  switch (report) {
+    case "1":
+      return generateIncomeExpenseReport(transactions);
+    case "2":
+      return await generateCategoricalExpenseReport(transactions);
+    default:
+      throw new Error("Invalid report type provided!");
+  }
+};
+
+export { insertReport, removeReport, retrieveReportDetail, retrieveAllReports };

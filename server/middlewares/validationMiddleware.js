@@ -335,3 +335,51 @@ export const validateGetAllTransactionsByPeriod = [
     next();
   },
 ];
+
+export const validateAddReport = [
+  check("userId").notEmpty().withMessage("User Id is required!"),
+  check("report").notEmpty().withMessage("Report cannot be empty!"),
+  check("reportType").notEmpty().withMessage("Report Type cannot be empty!"),
+  check("month").notEmpty().withMessage("Month cannot be empty!"),
+  check("year").notEmpty().withMessage("Year cannot be empty!"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
+export const validateDeleteReport = [
+  check("reportId").notEmpty().withMessage("Report Id is required!"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
+export const validateGetReportDetail = [
+  check("reportId").notEmpty().withMessage("Report Id is required!"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
+export const validateGetAllReports = [
+  check("userId").notEmpty().withMessage("User Id is required!"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];

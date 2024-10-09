@@ -87,7 +87,7 @@ function ReportPage({ user }) {
       </Modal>
 
       {reports.length > 0 && (
-        <ReportVisual report={reports[3]} loading={loading} />
+        <ReportVisual report={reports[5]} loading={loading} />
       )}
     </div>
   );

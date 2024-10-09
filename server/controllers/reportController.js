@@ -1,7 +1,6 @@
 // server/controllers/reportController.js
 import {
   insertReport,
-  updateReport,
   removeReport,
   retrieveReportDetail,
   retrieveAllReports,
@@ -17,19 +16,6 @@ const addReport = async (req, res) => {
     res.status(200).json({ message: `Report added successfully!` });
   } catch (err) {
     error(`Failed to add report: ${err.message}`);
-    res.status(500).json({ message: err.message });
-  }
-};
-
-const editReport = async (req, res) => {
-  try {
-    const { reportId, userId, reportType, reportData } = req.body;
-
-    const result = await updateReport(reportId, userId, reportType, reportData);
-    log(`Report edited successfully!`);
-    res.status(200).json({ message: `Report edited successfully!` });
-  } catch (err) {
-    error(`Failed to edit report: ${err.message}`);
     res.status(500).json({ message: err.message });
   }
 };
@@ -73,4 +59,4 @@ const getAllReports = async (req, res) => {
   }
 };
 
-export { addReport, editReport, deleteReport, getReportDetail, getAllReports };
+export { addReport, deleteReport, getReportDetail, getAllReports };
