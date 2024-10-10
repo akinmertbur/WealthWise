@@ -20,6 +20,7 @@ const getReportDetail = async (report_id) => {
 const getAllReports = async (user_id) => {
   return await Report.findAll({
     where: { user_id },
+    order: [["updatedAt", "DESC"]],
   });
 };
 

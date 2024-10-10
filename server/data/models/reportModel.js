@@ -26,6 +26,14 @@ const Report = sequelize.define(
       type: DataTypes.JSON,
       allowNull: false,
     },
+    month: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    year: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   },
   {
     timestamps: true,

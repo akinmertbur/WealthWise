@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from "react";
 import Modal from "../../components/Modal/Modal";
 import AddReportForm from "../../components/AddReportForm/AddReportForm";
+import ReportList from "../../components/ReportList/ReportList";
 import "./ReportPage.css";
-import ReportVisual from "../../components/ReportVisual/ReportVisual";
 
 function ReportPage({ user }) {
   const userId = user.id;
@@ -86,9 +86,12 @@ function ReportPage({ user }) {
         />
       </Modal>
 
-      {reports.length > 0 && (
-        <ReportVisual report={reports[5]} loading={loading} />
-      )}
+      <ReportList
+        reports={reports}
+        loading={loading}
+        onSuccess={handleSuccess}
+        onError={handleError}
+      />
     </div>
   );
 }

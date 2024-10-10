@@ -2,16 +2,14 @@
 import React from "react";
 import CompareExpensesIncomesReport from "../CompareExpensesIncomesReport/CompareExpensesIncomesReport";
 import CategoricalExpensesReport from "../CategoricalExpensesReport/CategoricalExpensesReport";
+import "./ReportVisual.css";
 
-const ReportVisual = function ({ report, loading }) {
-  const reportData = JSON.parse(report.report_data);
-  const income = reportData?.income ?? false;
-
+const ReportVisual = function ({ report, loading, category }) {
   return (
     <div>
       {loading ? (
         <p>Loading...</p> // Display a loading message while fetching reports
-      ) : income || income === 0 || income === "0" ? (
+      ) : category === 1 ? (
         <CompareExpensesIncomesReport reportData={report.report_data} />
       ) : (
         <CategoricalExpensesReport reportData={report.report_data} />

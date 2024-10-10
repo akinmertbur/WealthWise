@@ -16,7 +16,7 @@ const ReportForm = ({
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>Report Type:</label>
+        <label>Report Category:</label>
         <div>
           <input
             type="radio"
@@ -63,7 +63,10 @@ const ReportForm = ({
             name="reportType"
             value="yearly"
             checked={reportType === "yearly"}
-            onChange={(e) => setReportType(e.target.value)}
+            onChange={(e) => {
+              setReportType(e.target.value);
+              setMonth("0"); // Set month to 0 when yearly is selected
+            }}
             required
           />
           <label htmlFor="yearly">Yearly</label>
@@ -73,8 +76,9 @@ const ReportForm = ({
         <label htmlFor="month">Month:</label>
         <select
           id="month"
-          value={month}
+          value={reportType === "yearly" ? "0" : month} // Set to 0 if reportType is yearly
           onChange={(e) => setMonth(e.target.value)}
+          disabled={reportType === "yearly"} // Disable if yearly is selected
           required
         >
           <option value="">Select Month</option>

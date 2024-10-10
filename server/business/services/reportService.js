@@ -35,6 +35,8 @@ const insertReport = async (userId, report, reportType, month, year) => {
       user_id: userId,
       report_type: reportType,
       report_data: reportData,
+      month,
+      year,
     });
   } catch (err) {
     throw new Error(`Failed to add report: ${err.message}`);
