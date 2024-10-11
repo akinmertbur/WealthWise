@@ -64,7 +64,7 @@ function ReportPage({ user }) {
   };
 
   return (
-    <div>
+    <div className="report-page">
       {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
       {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
 

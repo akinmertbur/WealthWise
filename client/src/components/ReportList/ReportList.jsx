@@ -1,6 +1,6 @@
 // src/components/ReportList/ReportList.jsx
 import React, { useState } from "react";
-import Modal from "../../components/Modal/Modal";
+import Modal from "../../components/ReportModal/ReportModal";
 import ReportVisual from "../ReportVisual/ReportVisual";
 import "./ReportList.css";
 
@@ -53,22 +53,22 @@ const ReportList = function ({ reports, loading, onSuccess, onError }) {
   };
 
   return (
-    <div className="report-list">
+    <div className="rprt-list">
       {loading ? (
         <p>Loading...</p> // Display a loading message while fetching reports
       ) : (
         <div>
           <h2>Statistical Reports</h2>
-          <p className="check-msg">Check your statistics</p>
+          <p className="chck-msg">Check your statistics</p>
           {reports.length > 0 ? (
-            <table className="report-table">
+            <table className="rprt-table">
               <thead>
                 <tr>
                   <th>Category</th>
                   <th>Type</th>
                   <th>Period</th>
                   <th>Creation Date</th>
-                  <th>Show / Delete</th>
+                  <th>Show/Delete Report</th>
                 </tr>
               </thead>
               <tbody>
@@ -89,13 +89,13 @@ const ReportList = function ({ reports, loading, onSuccess, onError }) {
                     <td>
                       <button
                         onClick={() => handleDisplay(report)}
-                        className="edit-button"
+                        className="edt-button"
                       >
                         Show
                       </button>
                       <button
                         onClick={() => handleDelete(report.report_id)}
-                        className="edit-button"
+                        className="edt-button"
                       >
                         Delete
                       </button>

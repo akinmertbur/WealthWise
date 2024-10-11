@@ -1,30 +1,30 @@
-.report-table {
+.rprt-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 10px; /* Adds space between rows */
   margin-top: 20px;
 }
 
-.report-table th,
-.report-table td {
+.rprt-table th,
+.rprt-table td {
   padding: 12px 15px; /* Adds padding for more space inside the cells */
   text-align: center;
   background-color: #2e2e2e; /* Background color for rows */
   border: none;
 }
 
-.report-table th {
+.rprt-table th {
   background-color: #3c3c3c; /* Darker background for the header */
   font-weight: bold;
   color: #fff; /* White text for the header */
   border-bottom: 2px solid #444;
 }
 
-.report-table tr {
+.rprt-table tr {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Adds shadow to rows for more depth */
 }
 
-.report-table tr:hover {
+.rprt-table tr:hover {
   background-color: #3d3d3d; /* Light hover effect */
 }
 
@@ -35,18 +35,18 @@ h2 {
   color: #fff; /* White text for the heading */
 }
 
-.check-msg {
+.chck-msg {
   margin-top: 0px;
   margin-bottom: 20px;
   color: #717070;
 }
 
-.edit-button {
+.edt-button {
   width: 40%;
   margin-top: 0px;
   margin-right: 10px;
 }
 
-.report-list {
+.rprt-list {
   width: 1000px;
 }

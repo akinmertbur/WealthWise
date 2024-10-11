@@ -48,7 +48,7 @@ const CategoricalExpensesReport = function ({ reportData }) {
   };
 
   return (
-    <div className="pie-chart">
+    <div className="pie-chrt">
       <Pie data={data} options={options} />
     </div>
   );

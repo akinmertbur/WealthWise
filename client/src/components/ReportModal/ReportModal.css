@@ -1,0 +1,53 @@
+.mdl-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.mdl-content {
+  position: relative;
+  padding: 20px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.95);
+  max-height: 80vh; /* Keeps vertical overflow manageable */
+  width: auto; /* Automatically adjust based on content */
+  max-width: 90vw; /* Optional: Set a max-width for very wide content */
+}
+
+.cls-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Media Queries for Mobile Devices */
+@media (max-width: 768px) {
+  .mdl-content {
+    padding: 15px;
+  }
+
+  .cls-button {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .mdl-content {
+    padding: 10px;
+  }
+
+  .cls-button {
+    font-size: 1.1rem;
+  }
+}

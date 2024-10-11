@@ -1,5 +1,6 @@
 // src/components/CompareExpensesIncomesReport/CompareExpensesIncomesReport.jsx
 import React from "react";
+import "./CompareExpensesIncomesReport.css";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -51,7 +52,7 @@ const CompareExpensesIncomesReport = function ({ reportData }) {
   };
 
   return (
-    <div className="bar-chart">
+    <div className="bar-chrt">
       <Bar data={data} options={options} />
     </div>
   );
