@@ -1,0 +1,58 @@
+.user-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px; /* Adds space between rows */
+  margin-top: 20px;
+}
+
+.user-table th,
+.user-table td {
+  padding: 12px 15px; /* Adds padding for more space inside the cells */
+  text-align: center;
+  background-color: #2e2e2e; /* Background color for rows */
+  border: none;
+}
+
+.user-table th {
+  background-color: #3c3c3c; /* Darker background for the header */
+  font-weight: bold;
+  color: #fff; /* White text for the header */
+  border-bottom: 2px solid #444;
+}
+
+.user-table tr {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Adds shadow to rows for more depth */
+}
+
+.user-table tr:hover {
+  background-color: #3d3d3d; /* Light hover effect */
+}
+
+.user-profile {
+  width: 1000px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-top: 30px;
+  margin-bottom: 0px;
+  color: #fff; /* White text for the heading */
+}
+
+.user-edit-btn {
+  padding-left: 8px;
+  padding-right: 23px;
+  margin-left: 10px !important;
+}
+
+#pwd {
+  width: 50%;
+}
+
+#username {
+  width: 50%;
+}
+
+#email {
+  width: 50%;
+}

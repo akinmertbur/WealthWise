@@ -383,3 +383,49 @@ export const validateGetAllReports = [
     next();
   },
 ];
+
+export const validateEditUsername = [
+  check("userId").notEmpty().withMessage("User ID is required"),
+  check("username").notEmpty().withMessage("Username cannot be empty"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
+export const validateEditEmail = [
+  check("userId").notEmpty().withMessage("User ID is required"),
+  check("email").isEmail().withMessage("Valid email is required"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
+export const validateDeleteUser = [
+  check("userId").notEmpty().withMessage("User Id is required!"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
+export const validateSummary = [
+  check("userId").notEmpty().withMessage("User Id is required!"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];

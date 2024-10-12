@@ -17,12 +17,19 @@ const HomePage = ({ user }) => {
   const navigate = useNavigate();
   const location = useLocation(); // Use useLocation to get the state passed from the login page
   const today = new Date();
+  const userId = user.id;
 
   useEffect(() => {
     // Fetch income, expenses, and savings data from an API or perform calculations
     const fetchFinancialSummary = async () => {
       try {
-        const response = await fetch("/api/summary");
+        const response = await fetch("/api/summary", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId }),
+        });
         const data = await response.json();
         if (response.ok) {
           setIncome(data.data.income); // Update income state

@@ -7,6 +7,9 @@ import {
   findUserByEmail,
   findUserById,
   updateUserPassword,
+  changeUsername,
+  changeEmail,
+  removeUser,
 } from "../business/services/authService.js";
 import { log, error } from "../utils/logger.js";
 
@@ -101,10 +104,59 @@ const checkAuthController = (req, res) => {
   }
 };
 
+const editUsername = async (req, res) => {
+  const { userId, username } = req.body;
+  try {
+    const result = await changeUsername(userId, username);
+
+    if (result[0] === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    log(`Username edited for the user ID: ${userId}`);
+    res.status(200).json({ username });
+  } catch (err) {
+    error(`Failed to edit username: ${err.message}`);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const editEmail = async (req, res) => {
+  const { userId, email } = req.body;
+  try {
+    const result = await changeEmail(userId, email);
+
+    if (result[0] === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    log(`Email edited for the user ID: ${userId}`);
+    res.status(200).json({ message: "Email edited successfully" });
+  } catch (err) {
+    error(`Failed to edit email: ${err.message}`);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const deleteUser = async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+    const result = await removeUser(userId);
+
+    log(`User deleted successfully!`);
+    res.status(200).json({ message: `User deleted successfully!` });
+  } catch (err) {
+    error(`Failed to delete user: ${err.message}`);
+    res.status(500).json({ message: err.message });
+  }
+};
+
 export {
   registerUserController,
   loginUserController,
   logoutUserController,
   editPasswordController,
   checkAuthController,
+  editUsername,
+  editEmail,
+  deleteUser,
 };

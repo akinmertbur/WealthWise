@@ -4,7 +4,8 @@ import { getSummary } from "../business/services/summaryService.js";
 
 const getTransactionsSummary = async (req, res) => {
   try {
-    const data = await getSummary();
+    const { userId } = req.body;
+    const data = await getSummary(userId);
 
     log(`Transactions summary retrieved successfully!`);
     res.status(200).json({ data });

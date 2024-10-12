@@ -28,10 +28,29 @@ const updatePassword = async (userId, newPassword) => {
   );
 };
 
+const editUsername = async (userId, username) => {
+  return await User.update({ username: username }, { where: { id: userId } });
+};
+
+const editEmail = async (userId, email) => {
+  return await User.update({ email: email }, { where: { id: userId } });
+};
+
+const deleteUser = async (user_id) => {
+  const row = await User.findOne({ where: { id: user_id } });
+
+  if (row) {
+    await row.destroy(); // deletes the row
+  }
+};
+
 export {
   createUser,
   getUserByEmail,
   getUserByUsername,
   getUserById,
   updatePassword,
+  editUsername,
+  editEmail,
+  deleteUser,
 };

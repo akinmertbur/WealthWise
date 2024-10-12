@@ -4,11 +4,11 @@ import {
   retrieveExpenseTransactions,
 } from "./transactionService.js";
 
-const getSummary = async () => {
+const getSummary = async (userId) => {
   try {
     const [incomeData, expenseData] = await Promise.all([
-      retrieveIncomeTransactions(),
-      retrieveExpenseTransactions(),
+      retrieveIncomeTransactions(userId),
+      retrieveExpenseTransactions(userId),
     ]);
 
     let savingsTotal = 0;

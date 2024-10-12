@@ -34,15 +34,15 @@ const getAllTransactions = async (user_id) => {
   });
 };
 
-const getIncomeTransactions = async () => {
+const getIncomeTransactions = async (user_id) => {
   return await Transaction.findAll({
-    where: { transaction_type: "income" },
+    where: { transaction_type: "income", user_id },
   });
 };
 
-const getExpenseTransactions = async () => {
+const getExpenseTransactions = async (user_id) => {
   return await Transaction.findAll({
-    where: { transaction_type: "expense" },
+    where: { transaction_type: "expense", user_id },
   });
 };
 

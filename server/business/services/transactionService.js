@@ -149,9 +149,9 @@ const retrieveAllTransactions = async (userId) => {
   }
 };
 
-const retrieveIncomeTransactions = async () => {
+const retrieveIncomeTransactions = async (userId) => {
   try {
-    return await getIncomeTransactions();
+    return await getIncomeTransactions(userId);
   } catch (err) {
     throw new Error(
       `Failed to retrieve the income transactions: ${err.message}`
@@ -159,9 +159,9 @@ const retrieveIncomeTransactions = async () => {
   }
 };
 
-const retrieveExpenseTransactions = async () => {
+const retrieveExpenseTransactions = async (userId) => {
   try {
-    return await getExpenseTransactions();
+    return await getExpenseTransactions(userId);
   } catch (err) {
     throw new Error(
       `Failed to retrieve the expense transactions: ${err.message}`
