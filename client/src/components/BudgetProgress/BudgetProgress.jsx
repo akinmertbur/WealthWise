@@ -27,7 +27,10 @@ const BudgetProgress = ({ plannedAmount, actualAmount }) => {
       <div className="progress-bar">
         <div
           className="progress"
-          style={{ width: `${Math.min(progress, 100)}%` }}
+          style={{
+            width: `${Math.min(progress, 100)}%`,
+            backgroundColor: progress >= 80 && "red",
+          }}
         >
           {Math.min(progress, 100).toFixed(2)}%
         </div>

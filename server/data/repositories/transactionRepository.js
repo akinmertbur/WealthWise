@@ -27,7 +27,10 @@ const getTransactionDetail = async (transaction_id) => {
 const getAllTransactions = async (user_id) => {
   return await Transaction.findAll({
     where: { user_id },
-    order: [["transaction_date", "DESC"]],
+    order: [
+      ["transaction_date", "DESC"],
+      ["updatedAt", "DESC"],
+    ],
   });
 };
 
@@ -59,7 +62,10 @@ const getAllTransactionsByPeriod = async (user_id, month, year) => {
         literal(`EXTRACT(YEAR FROM "transaction_date") = ${year}`),
       ],
     },
-    order: [["transaction_date", "DESC"]],
+    order: [
+      ["transaction_date", "DESC"],
+      ["updatedAt", "DESC"],
+    ],
   });
 };
 
