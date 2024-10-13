@@ -1,109 +1,49 @@
 // src/components/UserProfile/UserProfile.jsx
 import React, { useState } from "react";
-import EditUserButton from "../EditUserButton";
-import EditProfileBtn from "../EditProfileBtn";
-import EditProfileInput from "../EditProfileInput";
+import EditableField from "../EditableField";
+import DeleteUserButton from "../DeleteUserButton";
 import "./UserProfile.css";
 import { useNavigate } from "react-router-dom";
 
 const UserProfile = function ({ user, onSuccess, onError }) {
-  const navigate = useNavigate(); // Get the navigate function
+  const navigate = useNavigate();
   const [isEditPassword, setIsEditPassword] = useState(false);
-  const [password, setPassword] = useState("");
   const [isEditUsername, setIsEditUsername] = useState(false);
-  const [username, setUsername] = useState(user.username);
   const [isEditEmail, setIsEditEmail] = useState(false);
+
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-    if (e.target.value.length < 8) {
-      onError("Password must be at least 8 characters long");
-    } else {
-      onSuccess("");
-    }
-  };
+  const handleFieldChange =
+    (setter, validationFn, successMsg, errorMsg) => (e) => {
+      const value = e.target.value;
+      setter(value);
+      if (!validationFn(value)) {
+        onError(errorMsg);
+      } else {
+        onSuccess(successMsg);
+      }
+    };
 
-  const handleEditPassword = async (userId, password) => {
+  const handleEditField = async (field, value, endpoint, setIsEdit) => {
     try {
-      const response = await fetch("/api/auth/editPassword", {
+      const response = await fetch(`/api/auth/${endpoint}`, {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId, password }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: user.id, [field]: value }),
       });
-
       const data = await response.json();
-
       if (response.ok) {
         onSuccess(data.message);
-        setIsEditPassword(false);
+        setIsEdit(false);
       } else if (response.status === 400) {
-        onError("Bad request: Password validation is failed!"); // Specific handling for 400 status
+        onError(`Bad request: ${field} validation failed!`);
       } else {
-        onError(data.message); // Handling for other errors
+        onError(data.message);
       }
     } catch (err) {
-      onError("An error occurred while editing the password.");
-    }
-  };
-
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-  };
-
-  const handleEditUsername = async (userId, username) => {
-    try {
-      const response = await fetch("/api/auth/editUsername", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId, username }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        onSuccess(data.message);
-        setIsEditUsername(false);
-      } else if (response.status === 400) {
-        onError("Bad request: Username validation is failed!"); // Specific handling for 400 status
-      } else {
-        onError(data.message); // Handling for other errors
-      }
-    } catch (err) {
-      onError("An error occurred while editing the username.");
-    }
-  };
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handleEditEmail = async (userId, email) => {
-    try {
-      const response = await fetch("/api/auth/editEmail", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId, email }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        onSuccess(data.message);
-        setIsEditEmail(false);
-      } else if (response.status === 400) {
-        onError("Bad request: Email validation is failed!"); // Specific handling for 400 status
-      } else {
-        onError(data.message); // Handling for other errors
-      }
-    } catch (err) {
-      onError("An error occurred while editing the email.");
+      onError(`An error occurred while editing the ${field}.`);
     }
   };
 
@@ -111,17 +51,13 @@ const UserProfile = function ({ user, onSuccess, onError }) {
     try {
       const response = await fetch("/api/auth/delete", {
         method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId }),
       });
-
       const data = await response.json();
-
       if (response.ok) {
         onSuccess(data.message);
-        navigate("/login"); // Navigate to a different route on success
+        navigate("/login");
       } else {
         onError(data.message);
       }
@@ -145,85 +81,72 @@ const UserProfile = function ({ user, onSuccess, onError }) {
         </thead>
         <tbody>
           <tr key={user.id}>
-            <td>
-              {!isEditUsername ? (
-                <>
-                  {username}
-                  <EditProfileBtn onEdit={setIsEditUsername} />
-                </>
-              ) : (
-                <>
-                  <EditProfileInput
-                    id="username"
-                    type="text"
-                    value={username}
-                    placeholder="Enter Username"
-                    onChange={handleUsernameChange}
-                  />
-                  <EditUserButton
-                    userId={user.id}
-                    data={username}
-                    onEdit={handleEditUsername}
-                    disabled={username.length < 1}
-                  />
-                </>
+            <EditableField
+              label="Username"
+              value={username}
+              isEdit={isEditUsername}
+              onEdit={() => setIsEditUsername(true)}
+              onSave={() =>
+                handleEditField(
+                  "username",
+                  username,
+                  "editUsername",
+                  setIsEditUsername
+                )
+              }
+              onChange={handleFieldChange(
+                setUsername,
+                (val) => val.length > 0,
+                "",
+                "Username is required"
               )}
-            </td>
-            <td>
-              {!isEditEmail ? (
-                <>
-                  {email}
-                  <EditProfileBtn onEdit={setIsEditEmail} />
-                </>
-              ) : (
-                <>
-                  <EditProfileInput
-                    id="email"
-                    type="email"
-                    value={email}
-                    placeholder="Enter Email"
-                    onChange={handleEmailChange}
-                  />
-                  <EditUserButton
-                    userId={user.id}
-                    data={email}
-                    onEdit={handleEditEmail}
-                    disabled={username.length < 1}
-                  />
-                </>
+              inputType="text"
+              userId={user.id}
+              validation={(val) => val.length > 0}
+            />
+            <EditableField
+              label="Email"
+              value={email}
+              isEdit={isEditEmail}
+              onEdit={() => setIsEditEmail(true)}
+              onSave={() =>
+                handleEditField("email", email, "editEmail", setIsEditEmail)
+              }
+              onChange={handleFieldChange(
+                setEmail,
+                (val) => val.includes("@"),
+                "",
+                "Invalid email address"
               )}
-            </td>
-            <td>
-              {!isEditPassword ? (
-                <>
-                  {"*****"}
-                  <EditProfileBtn onEdit={setIsEditPassword} />
-                </>
-              ) : (
-                <>
-                  <EditProfileInput
-                    id="pwd"
-                    type="password"
-                    value={password}
-                    placeholder="Enter Password"
-                    onChange={handlePasswordChange}
-                  />
-                  <EditUserButton
-                    userId={user.id}
-                    data={password}
-                    onEdit={handleEditPassword}
-                    disabled={password.length < 8}
-                  />
-                </>
+              inputType="email"
+              userId={user.id}
+              validation={(val) => val.includes("@")}
+            />
+            <EditableField
+              label="Password"
+              value={password}
+              isEdit={isEditPassword}
+              onEdit={() => setIsEditPassword(true)}
+              onSave={() =>
+                handleEditField(
+                  "password",
+                  password,
+                  "editPassword",
+                  setIsEditPassword
+                )
+              }
+              onChange={handleFieldChange(
+                setPassword,
+                (val) => val.length >= 8,
+                "",
+                "Password must be at least 8 characters long"
               )}
-            </td>
+              inputType="password"
+              userId={user.id}
+              validation={(val) => val.length >= 8}
+            />
             <td>
-              <button
-                onClick={() => handleDelete(user.id)}
-                className="edit-button"
-              >
-                Delete Account
-              </button>
+              <DeleteUserButton userId={user.id} onDelete={handleDelete} />
             </td>
           </tr>
         </tbody>

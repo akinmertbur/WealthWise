@@ -1,3 +1,4 @@
+// src/pages/HomePage/HomePage.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import SummaryCard from "../../components/SummaryCard/SummaryCard";

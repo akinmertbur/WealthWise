@@ -1,3 +1,4 @@
+// src/pages/ProfilePage/ProfilePage.jsx
 import React, { useState } from "react";
 import UserProfile from "../../components/UserProfile/UserProfile";
 
