@@ -6,3 +6,12 @@
   display: flex;
   margin-bottom: 10px;
 }
+
+.goals-page {
+  width: 1000px;
+}
+
+.goal-prg-msg {
+  color: #717070;
+  margin: 0 0 20px 0;
+}

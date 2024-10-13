@@ -114,7 +114,7 @@ function GoalsPage({ user }) {
   };
 
   return (
-    <div className="App">
+    <div className="goals-page">
       {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
       {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
 
@@ -135,6 +135,8 @@ function GoalsPage({ user }) {
         Add Goal
       </button>
 
+      <h2>Future Goals</h2>
+      <p className="goal-prg-msg">Check your future goals</p>
       {/* Display the goals with progress bar*/}
       {goals.length > 0 ? (
         goals.map((goal) => (

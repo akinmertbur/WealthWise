@@ -130,9 +130,15 @@ const ExpensesPieChart = function ({ userId, onError }) {
   };
 
   return (
-    <div className="pie-chart">
-      <Pie data={data} options={options} />
-    </div>
+    <>
+      {Object.keys(categoryCounts).length > 0 ? (
+        <div className="pie-chart">
+          <Pie data={data} options={options} />
+        </div>
+      ) : (
+        <p>No Categorical Expenses statistics found.</p>
+      )}
+    </>
   );
 };
 

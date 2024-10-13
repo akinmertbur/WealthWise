@@ -45,7 +45,12 @@ const DateForm = ({ date, setDate }) => {
       </label>
       <label>
         Year:
-        <select name="year" value={date.year} onChange={handleChange}>
+        <select
+          id="date-form-year"
+          name="year"
+          value={date.year}
+          onChange={handleChange}
+        >
           <option value="">Select Year</option>
           {years.map((year, index) => (
             <option key={index} value={year}>

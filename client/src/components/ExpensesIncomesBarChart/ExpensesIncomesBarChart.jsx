@@ -111,9 +111,15 @@ const ExpensesIncomesBarChart = function ({ userId, onError }) {
   };
 
   return (
-    <div className="bar-chart">
-      <Bar data={data} options={options} />
-    </div>
+    <>
+      {incomesTotal === 0 && expensesTotal === 0 ? (
+        <p>No Expenses & Incomes statistics found.</p>
+      ) : (
+        <div className="bar-chart">
+          <Bar data={data} options={options} />
+        </div>
+      )}
+    </>
   );
 };
 
