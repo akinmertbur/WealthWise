@@ -1,5 +1,7 @@
+// src/pages/RegisterPage/RegisterPage.jsx
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
+import { useNavigate, Link } from "react-router-dom"; // Import useNavigate for redirection
+import "./RegisterPage.css";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState("");
@@ -43,7 +45,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div>
+    <div className="register-page">
       <h2>Register</h2>
       <form onSubmit={handleRegister}>
         <div>
@@ -77,6 +79,10 @@ const RegisterPage = () => {
       </form>
       {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
       {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+
+      <p>
+        If you have an account? <Link to="/login">Login here</Link>
+      </p>
     </div>
   );
 };
