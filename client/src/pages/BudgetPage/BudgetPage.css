@@ -1,3 +1,7 @@
 .add-budget-button {
-  width: 1000px;
+  width: 1050px;
+}
+
+.budget-page {
+  min-height: 150vh;
 }

@@ -49,12 +49,11 @@ function Budgets({
 
   return (
     <>
-      {!editable && (
-        <>
-          <h2 className="budget-head-msg">Planned Budgets</h2>
-          <p className="budget-msg">Check your planned budgets</p>
-        </>
-      )}
+      <h2 className="budget-head-msg">
+        Planned Budgets {editable && "with selected time period"}
+      </h2>
+      <p className="budget-msg">Check your planned budgets</p>
+
       {/* Display the budgets with progress bar*/}
       {budgets.length > 0 ? (
         budgets.map((budget) => (

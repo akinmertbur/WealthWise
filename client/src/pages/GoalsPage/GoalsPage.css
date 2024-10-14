@@ -8,7 +8,8 @@
 }
 
 .goals-page {
-  width: 1000px;
+  width: 1050px;
+  min-height: 150vh;
 }
 
 .goal-prg-msg {

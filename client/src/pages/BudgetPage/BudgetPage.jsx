@@ -86,7 +86,7 @@ function BudgetPage({ user }) {
   };
 
   return (
-    <div className="App">
+    <div className="budget-page">
       {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
       {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
 

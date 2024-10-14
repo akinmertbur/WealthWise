@@ -30,7 +30,7 @@
 
 h2 {
   font-size: 1.5rem;
-  margin-top: 30px;
+  margin-top: 40px;
   margin-bottom: 0px;
   color: #fff; /* White text for the heading */
 }
@@ -48,5 +48,5 @@ h2 {
 }
 
 .rprt-list {
-  width: 1000px;
+  width: 1050px;
 }

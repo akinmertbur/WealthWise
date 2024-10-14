@@ -69,6 +69,7 @@ const UserProfile = function ({ user, onSuccess, onError }) {
   return (
     <div className="user-profile">
       <h2>User Profile</h2>
+      <p className="check-msg">Check your user profile</p>
 
       <table className="user-table">
         <thead>

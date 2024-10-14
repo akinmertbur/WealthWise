@@ -1,6 +1,7 @@
 // src/pages/ProfilePage/ProfilePage.jsx
 import React, { useState } from "react";
 import UserProfile from "../../components/UserProfile/UserProfile";
+import "./ProfilePage.css";
 
 const ProfilePage = ({ user }) => {
   const [errorMessage, setErrorMessage] = useState(null);

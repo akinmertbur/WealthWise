@@ -70,12 +70,10 @@ const TransactionList = ({
 
   return (
     <div className="transaction-list">
-      {!edit && (
-        <>
-          <h2>Last transactions</h2>
-          <p className="check-msg">Check your last transactions</p>
-        </>
-      )}
+      <h2>
+        {edit ? "Transactions with selected time period" : "Last transactions"}
+      </h2>
+      <p className="check-msg">Check your {!edit && "last"} transactions</p>
 
       {transactions.length > 0 ? (
         <table className="transaction-table">
