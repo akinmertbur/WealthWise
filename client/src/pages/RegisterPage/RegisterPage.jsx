@@ -1,6 +1,7 @@
 // src/pages/RegisterPage/RegisterPage.jsx
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom"; // Import useNavigate for redirection
+import Logo from "../../components/Logo/Logo";
 import "./RegisterPage.css";
 
 const RegisterPage = () => {
@@ -46,7 +47,8 @@ const RegisterPage = () => {
 
   return (
     <div className="register-page">
-      <h2>Register</h2>
+      <Logo />
+      <h2 id="register-head">Register</h2>
       <form onSubmit={handleRegister}>
         <div>
           <label>Email:</label>

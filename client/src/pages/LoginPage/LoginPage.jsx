@@ -1,6 +1,7 @@
 // src/pages/LoginPage/LoginPage.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
+import Logo from "../../components/Logo/Logo";
 import "./LoginPage.css";
 
 const LoginPage = () => {
@@ -50,7 +51,8 @@ const LoginPage = () => {
 
   return (
     <div className="login-page">
-      <h2>Login</h2>
+      <Logo />
+      <h2 id="login-head">Login</h2>
       <form onSubmit={handleLogin}>
         <div>
           <label>Email:</label>

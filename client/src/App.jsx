@@ -10,6 +10,7 @@ import GoalsPage from "./pages/GoalsPage/GoalsPage";
 import BudgetPage from "./pages/BudgetPage/BudgetPage";
 import ReportPage from "./pages/ReportPage/ReportPage";
 import Layout from "./components/Layout";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
@@ -76,6 +77,7 @@ function App() {
             }
           />
         </Routes>
+        <Footer />
       </Layout>
     </Router>
   );
