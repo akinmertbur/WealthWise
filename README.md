@@ -16,6 +16,7 @@ WealthWise is a personal finance tracking application designed to help users man
 ## Features
 
 - **User Authentication:** Secure login and registration using Passport.js.
+- **Edit Profile:** Update your username, email, and password from the profile page.
 - **Income and Expense Tracking:** Track your financial transactions by categorizing them as income or expenses.
 - **Financial Goals:** Set and track your financial goals (e.g., saving for a trip, debt repayment).
 - **Budget Planning:** Create and manage your monthly budgets.
@@ -36,6 +37,7 @@ WealthWise is a personal finance tracking application designed to help users man
 - **React:** Frontend library for building the user interface
 - **React Router:** Handles client-side routing for seamless page transitions
 - **CSS Modules:** Used for styling individual components
+- **Chart.js & react-chartjs-2:** For generating interactive charts and visualizing financial data
 
 ### Database
 
@@ -91,7 +93,7 @@ WealthWise/
 
 ```bash
 git clone https://github.com/akinmertbur/WealthWise.git
-cd wealthwise/server
+cd WealthWise/server
 ```
 
 2. Install dependencies:
@@ -112,10 +114,10 @@ DATABASE_URL=postgres://username:password@localhost:5432/wealthwise
 SESSION_SECRET=your_SESSION_SECRET
 ```
 
-4. Start the server (Sequelize will automatically handle migrations):
+4. Start the backend with Nodemon (Sequelize will automatically handle migrations):
 
 ```bash
-npm start
+nodemon server/app.js
 ```
 
 ### Frontend Setup
@@ -135,10 +137,10 @@ npm install
 3. Start the frontend application:
 
 ```bash
-npm start
+npm run dev
 ```
 
-4. The app will be running at `http://localhost:3000`.
+4. The app will be running at `http://localhost:5173`.
 
 ## Usage
 
@@ -150,6 +152,7 @@ npm start
     - Set financial goals in the Goals section.
     - Create a budget and track your spending.
     - Generate reports to get an overview of your financial situation.
+    - Update your username, email, or password.
 
 ## Database Schema
 
